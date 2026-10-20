@@ -1,0 +1,2 @@
+Copiar aca el contenido del paquete Manual Cesiones de MERCURIUS (Construir manual.bat, build, cotizaciones.js...).
+Al ejecutar Construir manual.bat se genera "Manual Cesiones.html", que es el que abre el portal.

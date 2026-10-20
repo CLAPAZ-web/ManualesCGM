@@ -1,0 +1,1 @@
+Copiar aca el paquete base (el de MERCURIUS) para usarlo como molde de cada empresa nueva.

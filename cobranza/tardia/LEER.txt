@@ -1,0 +1,1 @@
+Una subcarpeta por empresa (ej. nombre en minusculas, sin tildes ni espacios).

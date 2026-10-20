@@ -1,0 +1,31 @@
+MANUALES CGM&A - ESTRUCTURA GENERAL
+
+QUE ES
+"Inicio CGM&A.html" es la puerta de entrada: COBRANZA / VENTAS / OTROS.
+Cobranza se divide en unidades (TARDIA, MT, AGUERREBERE, CESIONES, PERU)
+y dentro de cada unidad estan las empresas cliente. Cada empresa tiene su
+propio manual (el modelo es el de MERCURIUS) en su carpeta.
+
+ORGANIZACION DE CARPETAS
+  Inicio CGM&A.html            <- abrir este
+  _plantilla\                  <- molde para crear el manual de una empresa nueva
+  cobranza\tardia\<empresa>\
+  cobranza\mt\<empresa>\
+  cobranza\aguerrebere\<empresa>\
+  cobranza\cesiones\mercurius\ <- aca va el paquete actual de MERCURIUS
+  cobranza\peru\<empresa>\
+  ventas\
+  otros\
+
+COMO AGREGAR UNA EMPRESA
+1) Copiar _plantilla a la unidad y renombrarla (ej. cobranza\tardia\oca).
+2) Adaptar y construir su manual (Construir manual.bat).
+3) Abrir "Inicio CGM&A.html" con el Bloc de notas, buscar "ESTRUCTURA"
+   y agregar una linea en la unidad que corresponde:
+     ["OCA", "cobranza/tardia/oca/Manual Cesiones.html", "listo"],
+   Si el manual aun no existe: ["OCA", "", "armado"],
+4) Guardar y refrescar el navegador (F5).
+
+COMPARTIRLO
+Copiar la carpeta "Manuales CGM&A" completa a la carpeta compartida.
+Las rutas son relativas: funciona igual en cualquier PC o servidor.
