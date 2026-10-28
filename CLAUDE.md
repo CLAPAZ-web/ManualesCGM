@@ -29,6 +29,15 @@ Los tokens del hash se separan con guiones (no usar "/").
    Grupos con `proximamente:true` se muestran con etiqueta "Próximamente".
 3. `CONTENIDO` — HTML de cada sección por empresa: `CONTENIDO["mercurius"]["1.1"] = "<p>…</p>"`.
    Si una sección no tiene texto se muestra el recuadro "Aquí va el contenido…".
+4. `LOGOS` — logo de cada empresa en base64 (PNG ~192px): `LOGOS["itau"] = "data:image/png;base64,…"`.
+   El original se guarda en la carpeta de la empresa (ej. cobranza/tardia/itau/logo_itau.png).
+   El logo se ve en la tarjeta de la empresa y junto al título de su página.
+
+## Colores por empresa
+Cada empresa puede tener `tema:{…}` en ESTRUCTURA: al entrar a su página se pisan las variables CSS
+(cabecera, cab-suave, cab-linea, fondo, tarjeta, tarjeta2, linea, texto, suave, tenue, oro, activo, hover,
+subrayado; `esquema:"light"` para fondos claros). Al salir vuelven los colores de CGM&A.
+ITAU: cabecera naranja #FF6200, fondo claro #FFF7F0, acento #C24A00.
 
 ## Índice acordado (glosario base, tomado de Mercurius)
 1 · Manual: 1.1 Quién es {EMPRESA} · 1.2 Productos · 1.3 Montos a cobrar · 1.4 Pautas de gestión ·
