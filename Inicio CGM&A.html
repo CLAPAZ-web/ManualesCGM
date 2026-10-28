@@ -6,14 +6,15 @@
 <title>EMPRESAS360 · CGM&amp;A</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Libre+Baskerville:wght@400;700&family=Inter:wght@400;500;600&display=swap">
 <style>
 /* Layout: cabecera con logo + migas de pan; tres niveles (áreas > unidades > empresa) en tarjetas; la empresa abre índice lateral + sección */
 :root{
   color-scheme:dark;
   --fondo:#0b1f45; --tarjeta:#10285a; --tarjeta2:#163266; --linea:rgba(196,210,240,.18);
   --texto:#ffffff; --suave:#b9c6e2; --tenue:#7d8db0; --oro:#d9b66f;
-  --display:"Libre Baskerville",Baskerville,Georgia,"Times New Roman",serif;
+  --display:"Playfair Display",Georgia,"Times New Roman",serif;
+  --formal:"Libre Baskerville",Baskerville,Georgia,"Times New Roman",serif;
   --cuerpo:"Inter","Segoe UI",Calibri,Arial,sans-serif;
 }
 *{box-sizing:border-box}
@@ -30,6 +31,7 @@ main{padding-block:26px 56px}
 .migas a:hover{text-decoration-color:var(--oro)}
 .migas .sep{color:var(--tenue)}
 h1{font-family:var(--display);font-weight:700;font-size:clamp(2rem,4.5vw,2.75rem);line-height:1.1;margin:0 0 10px;text-wrap:balance}
+h1.portada{font-family:var(--formal)}
 .intro{color:var(--suave);font-size:1.08rem;max-width:62ch;margin:0 0 30px}
 
 /* Tarjetas de áreas / unidades / empresas */
@@ -174,7 +176,7 @@ function miga(lista){
 
 function vistaInicio(){
   return miga([["Inicio","inicio"]])+
-  `<h1>EMPRESAS360</h1><p class="intro">En este apartado se recopila toda la información relevante sobre las empresas de CGM&amp;A: manuales, pautas de carga, pautas administrativas e información comercial. Elegí el área de trabajo para empezar.</p>
+  `<h1 class="portada">EMPRESAS360</h1><p class="intro">En este apartado se recopila toda la información relevante sobre las empresas de CGM&amp;A: manuales, pautas de carga, pautas administrativas e información comercial. Elegí el área de trabajo para empezar.</p>
   <div class="grid">`+ESTRUCTURA.map(a=>{
     const pie=a.proximamente?"Próximamente":plural(a.unidades.length,"unidad","unidades");
     const cuerpo=`<div class="ico">${ICONOS[a.icono]||""}</div><h3>${esc(a.nombre.toUpperCase())}</h3><p>${esc(a.desc)}</p><span class="pie">${pie}</span>`;
