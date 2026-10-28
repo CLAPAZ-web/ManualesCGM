@@ -95,6 +95,7 @@ footer .wrap{border-top:1px solid var(--linea);padding-block:18px 28px;color:var
 /* =====================================================================
    1) ESTRUCTURA  —  Áreas > Unidades > Empresas
    Empresa: { id:"sin-espacios", nombre:"Nombre", equipo:"...", referente:"...", lider:"...",
+             asesores:["Nombre 1","Nombre 2"],
              manual:"ruta al manual completo (opcional)" }
    ===================================================================== */
 const ESTRUCTURA = [
@@ -223,7 +224,7 @@ function vistaUnidad(a,u){
 
 function ficha(u,e){
   const fila=(l,v)=>`<div class="dato"><div class="lbl">${l}</div><div class="val${v?"":" vacio"}">${esc(v||"A definir")}</div></div>`;
-  return `<div class="ficha">${fila("Unidad",u.titulo||u.nombre)}${fila("Referente operativo",e.referente)}${fila("Líder operativo",e.lider)}${fila("Equipo",e.equipo)}</div>`;
+  return `<div class="ficha">${fila("Unidad",u.titulo||u.nombre)}${fila("Referente operativo",e.referente)}${fila("Líder operativo",e.lider)}${fila("Equipo",e.equipo)}${fila("Asesores",[].concat(e.asesores||[]).join(", "))}</div>`;
 }
 
 function vistaEmpresa(a,u,e){

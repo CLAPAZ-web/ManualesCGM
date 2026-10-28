@@ -23,7 +23,7 @@ Los tokens del hash se separan con guiones (no usar "/").
 
 ## Partes editables (dentro del <script> de Inicio CGM&A.html)
 1. `ESTRUCTURA` — áreas > unidades > empresas.
-   Empresa: `{ id, nombre, equipo, referente, lider, manual?, bajada? }`. Si falta equipo/referente/líder
+   Empresa: `{ id, nombre, equipo, referente, lider, asesores?:[], manual?, bajada? }`. Si falta equipo/referente/líder
    se muestra "A definir". Unidad: `{ id, nombre (MAYÚSCULAS), titulo (para la ficha), empresas:[] }`.
 2. `PLANTILLA` — índice común a TODAS las empresas (`{EMPRESA}` se reemplaza por el nombre).
    Grupos con `proximamente:true` se muestran con etiqueta "Próximamente".
@@ -38,7 +38,7 @@ Los tokens del hash se separan con guiones (no usar "/").
 4 · Pautas administrativas (próximamente a completar)
 
 ## Ficha del equipo (recuadro sobre el índice)
-Unidad · Referente operativo · Líder operativo · Equipo (en ese orden). Sin cotizaciones del dólar (se quitaron a pedido).
+Unidad · Referente operativo · Líder operativo · Equipo · Asesores (en ese orden; asesores es una lista). Sin cotizaciones del dólar (se quitaron a pedido).
 Mercurius: Unidad Cesiones · Equipo Mercurius · Referente Jean Franco Umpierrez · Líder Mónica Rocha.
 
 ## Empresas cargadas
