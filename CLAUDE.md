@@ -36,6 +36,7 @@ Los tokens del hash se separan con guiones (no usar "/").
 2 · Parámetros de carga: 2.1 Capital · 2.2 Máxima · 2.3 Mínima
 3 · Pautas de asignación (próximamente a completar)
 4 · Pautas administrativas (próximamente a completar)
+5 · Comercial (próximamente a completar)
 
 ## Ficha del equipo (recuadro sobre el índice)
 Unidad · Referente operativo · Líder operativo · Equipo · Asesores (en ese orden; asesores es una lista). Sin cotizaciones del dólar (se quitaron a pedido).
