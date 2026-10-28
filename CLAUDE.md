@@ -38,7 +38,7 @@ Los tokens del hash se separan con guiones (no usar "/").
 4 · Pautas administrativas (próximamente a completar)
 
 ## Ficha del equipo (recuadro sobre el índice)
-Unidad · Equipo · Referente operativo · Líder operativo. Sin cotizaciones del dólar (se quitaron a pedido).
+Unidad · Referente operativo · Líder operativo · Equipo (en ese orden). Sin cotizaciones del dólar (se quitaron a pedido).
 Mercurius: Unidad Cesiones · Equipo Mercurius · Referente Jean Franco Umpierrez · Líder Mónica Rocha.
 
 ## Empresas cargadas

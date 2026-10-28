@@ -223,7 +223,7 @@ function vistaUnidad(a,u){
 
 function ficha(u,e){
   const fila=(l,v)=>`<div class="dato"><div class="lbl">${l}</div><div class="val${v?"":" vacio"}">${esc(v||"A definir")}</div></div>`;
-  return `<div class="ficha">${fila("Unidad",u.titulo||u.nombre)}${fila("Equipo",e.equipo)}${fila("Referente operativo",e.referente)}${fila("Líder operativo",e.lider)}</div>`;
+  return `<div class="ficha">${fila("Unidad",u.titulo||u.nombre)}${fila("Referente operativo",e.referente)}${fila("Líder operativo",e.lider)}${fila("Equipo",e.equipo)}</div>`;
 }
 
 function vistaEmpresa(a,u,e){
