@@ -1,6 +1,6 @@
 # EMPRESAS (CGM&A)
 
-Portal EMPRESAS de CGM&A (empresa uruguaya de recuperación de activos): recopila la información relevante de cada empresa (manuales, pautas de carga, pautas administrativas e información comercial).
+Portal EMPRESAS de CGM&A (empresa uruguaya de gestión de cobranza y contact center): recopila la información relevante de cada empresa (manuales, pautas de carga, pautas administrativas e información comercial).
 Responsable: Camila (área comercial). Idioma: español rioplatense, trato de "vos".
 
 ## Qué es
