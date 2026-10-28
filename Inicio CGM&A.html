@@ -208,8 +208,7 @@ function vistaArea(a){
   a.unidades.map(u=>{
     const n=u.empresas.length;
     return `<a class="card" href="#${a.id}-${u.id}"><h3>${esc(u.nombre)}</h3>
-      <p>${n?u.empresas.map(e=>esc(e.nombre)).join(" · "):"Empresas por cargar"}</p>
-      <span class="pie">${plural(n,"empresa","empresas")}</span></a>`;
+      <span class="pie">${n?plural(n,"empresa","empresas"):"Empresas por cargar"}</span></a>`;
   }).join("")+`</div>`;
 }
 
