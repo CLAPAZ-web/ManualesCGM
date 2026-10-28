@@ -43,7 +43,10 @@ Mercurius: Unidad Cesiones · Equipo Mercurius · Referente Jean Franco Umpierre
 
 ## Empresas cargadas
 - CESIONES: Mercurius (modelo), Fabraler (datos de ficha a definir).
-- TARDÍA, MT, AGUERREBERE, PERÚ: pendiente el listado de empresas.
+- TARDÍA (19): ITAU, BTG PACTUAL, PAIGO - PYM, PAIGO, OCA, CRÉDITOS DIRECTOS, CASH, PRONTO, PASS CARD,
+  VERDE, REPÚBLICA MICROFINANZAS, FASTCRED, NATIVA, FIN UY, CRÉDITO AMIGO, ECOCREDIT, CAFUCA,
+  FLERICO - ITALCRED, COPAC (fichas a definir). Los id no llevan guiones ni espacios (ej. paigopym).
+- MT, AGUERREBERE, PERÚ: pendiente el listado de empresas.
 
 ## Diseño
 Fondo azul marino (#0b1f45), tarjetas #10285a, acento dorado (#d9b66f), texto blanco.
