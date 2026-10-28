@@ -1,6 +1,6 @@
-# Manuales CGM&A
+# EMPRESAS360 (CGM&A)
 
-Portal de manuales operativos de CGM&A (empresa uruguaya de recuperación de activos).
+Portal EMPRESAS360 de CGM&A (empresa uruguaya de recuperación de activos): recopila la información relevante de cada empresa (manuales, pautas de carga, pautas administrativas e información comercial).
 Responsable: Camila (área comercial). Idioma: español rioplatense, trato de "vos".
 
 ## Qué es
@@ -47,7 +47,7 @@ Mercurius: Unidad Cesiones · Equipo Mercurius · Referente Jean Franco Umpierre
 
 ## Diseño
 Fondo azul marino (#0b1f45), tarjetas #10285a, acento dorado (#d9b66f), texto blanco.
-Títulos en Playfair Display (fallback Georgia), texto en Inter (fallback Segoe UI).
+Títulos en Libre Baskerville (fallback Georgia), texto en Inter (fallback Segoe UI).
 Logo CGM&A en blanco con "&" gris, incrustado en base64 (original: _plantilla/logo_cgma_blanco.png).
 
 ## Pendientes
