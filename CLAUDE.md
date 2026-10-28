@@ -39,6 +39,7 @@ Cada empresa puede tener `tema:{…}` en ESTRUCTURA: al entrar a su página se p
 subrayado; `esquema:"light"` para fondos claros). Al salir vuelven los colores de CGM&A.
 ITAU: cabecera naranja #FF6200, fondo claro #FFF7F0, acento #C24A00.
 BTG PACTUAL: cabecera azul #001E61, fondo claro #F3F5FA, acento #001E61.
+PAIGO - PYM: cabecera violeta #6D29FA, fondo claro #F7F4FF, acento #5B1FE0.
 En las tarjetas el logo va sobre un recuadro blanco (para que se vean logos oscuros sobre el azul de CGM&A).
 
 ## Índice acordado (glosario base, tomado de Mercurius)
