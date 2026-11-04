@@ -64,7 +64,7 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(2rem,4.5vw,2.75rem
 .indice button.on{background:var(--activo,#2a4277);border-left-color:var(--oro)}
 .titulo-emp{display:flex;align-items:center;gap:18px;margin-bottom:10px}
 .titulo-emp h1{margin:0}
-.logo-emp{height:68px;width:auto;max-width:280px;object-fit:contain;flex:none}
+.logo-emp{display:block;height:80px;width:auto;max-width:min(320px,100%);object-fit:contain}
 .card .logo-card{height:44px;width:auto;max-width:100%;object-fit:contain;align-self:flex-start;background:#fff;border-radius:10px;padding:8px 12px;margin-bottom:6px}
 .seccion{background:var(--tarjeta);border:1px solid var(--linea);border-radius:16px;padding:30px 30px 34px;min-height:340px}
 .seccion .eyebrow{font-size:.82rem;letter-spacing:.16em;text-transform:uppercase;color:var(--oro)}
@@ -273,7 +273,7 @@ function vistaEmpresa(a,u,e){
   const t=s=>s.replace(/\{EMPRESA\}/g,e.nombre);
   const texto=(CONTENIDO[e.id]||{})[it[0]];
   return miga([["Inicio","inicio"],[a.nombre,a.id],[u.nombre,a.id+"-"+u.id],[e.nombre,""]])+
-  `<div class="titulo-emp">${LOGOS[e.id]?`<img class="logo-emp" src="${LOGOS[e.id]}" alt="Logo ${esc(e.nombre)}">`:""}<h1>${esc(e.nombre)}</h1></div><p class="intro">Unidad ${esc(u.nombre)} · ${esc(e.bajada||"Manual de gestión de la empresa, armado sobre la plantilla común.")}</p>
+  `<div class="titulo-emp"><h1>${LOGOS[e.id]?`<img class="logo-emp" src="${LOGOS[e.id]}" alt="${esc(e.nombre)}">`:esc(e.nombre)}</h1></div><p class="intro">Unidad ${esc(u.nombre)} · ${esc(e.bajada||"Manual de gestión de la empresa, armado sobre la plantilla común.")}</p>
   <div class="manual">
     <aside class="lateral">${ficha(u,e)}
       <div class="indice"><div class="tit">Contenido</div>`+

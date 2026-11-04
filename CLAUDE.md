@@ -31,7 +31,7 @@ Los tokens del hash se separan con guiones (no usar "/").
    Si una sección no tiene texto se muestra el recuadro "Aquí va el contenido…".
 4. `LOGOS` — logo de cada empresa en base64 (PNG ~192px): `LOGOS["itau"] = "data:image/png;base64,…"`.
    El original se guarda en la carpeta de la empresa (ej. cobranza/tardia/itau/logo_itau.png).
-   El logo se ve en la tarjeta de la empresa y junto al título de su página.
+   El logo se ve en la tarjeta de la empresa y, en su página, reemplaza al nombre como título (sin logo se muestra el nombre).
 
 ## Colores por empresa
 Cada empresa puede tener `tema:{…}` en ESTRUCTURA: al entrar a su página se pisan las variables CSS
