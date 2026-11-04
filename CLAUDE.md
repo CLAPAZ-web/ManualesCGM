@@ -42,6 +42,7 @@ BTG PACTUAL: cabecera azul #001E61, fondo claro #F3F5FA, acento #001E61.
 PAIGO - PYM: cabecera violeta #6D29FA, fondo claro #F7F4FF, acento #5B1FE0.
 PAIGO: cabecera naranja #F9460F, fondo claro #FFF6F2, acento #C93A0C.
 OCA: cabecera azul #006ED2, fondo claro #F2F7FD, acento #005BB0 (original en SVG).
+CRÉDITOS DIRECTOS: cabecera verde #007D3A, fondo claro #F4F9F1, acento #006B32, sección activa amarilla #FFF1A0.
 En las tarjetas el logo va sobre un recuadro blanco (para que se vean logos oscuros sobre el azul de CGM&A).
 
 ## Índice acordado (glosario base, tomado de Mercurius)
