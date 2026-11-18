@@ -55,7 +55,7 @@ En las tarjetas el logo va sobre un recuadro blanco (para que se vean logos oscu
 5 · Comercial: 5.1 Comisiones · 5.2 Contrato
 
 ## Pautas de asignación (formulario en 3.1)
-Desplegables definidos en `CAMPOS_ASIG` (parte editable 5): Tipo de asignación (Stock/Actualización/Ambos/Sólo ingreso/Stock e ingreso),
+Desplegables definidos en `CAMPOS_ASIG` (parte editable 5): Tipo de asignación (Stock/Actualización/Stock y actualización/Sólo ingreso/Stock e ingreso),
 Frecuencia de envío (Diaria/Semanal/Quincenal/Mensual), ¿Se recibe actualización? (Sí/No),
 Frecuencia envío actualización (Nunca/Diaria/Semanal/Quincenal) + Reportería (lista libre, se agregan/quitan reportes).
 Guardado: en el link de claude.ai, base de datos del artifact (capability `db`, colección `asignacion`, un doc por
