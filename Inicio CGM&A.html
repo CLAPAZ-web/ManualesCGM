@@ -55,6 +55,14 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(2rem,4.5vw,2.75rem
 .ficha .lbl{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--suave)}
 .ficha .val{font-size:1.05rem;font-weight:600;margin-top:2px}
 .ficha .val.vacio{color:var(--tenue);font-weight:400;font-style:italic}
+.ficha label.dato{display:flex;flex-direction:column;gap:6px}
+.ficha input,.ficha textarea{font:inherit;font-size:.98rem;color:var(--texto);background:var(--tarjeta);border:1px solid var(--linea);border-radius:8px;padding:8px 10px;width:100%;resize:vertical}
+.ficha input:focus-visible,.ficha textarea:focus-visible{outline:2px solid var(--oro);outline-offset:1px}
+.ficha .editar-ficha{justify-self:start;font-size:.85rem;padding:6px 12px}
+.ficha .acciones-ficha{display:flex;gap:8px}
+.ficha .guardar{border-color:var(--oro);color:var(--oro);font-weight:600}
+.ficha .estado-ficha{margin:0;font-size:.8rem;color:var(--tenue)}
+.ficha .estado-ficha:empty{display:none}
 .indice .tit{font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--oro);margin:0 2px 12px}
 .indice .grupo{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--oro);margin:16px 2px 6px}
 .indice button{display:flex;gap:14px;width:100%;background:none;border:0;border-left:3px solid transparent;color:var(--texto);font:inherit;text-align:left;padding:9px 12px;border-radius:8px;cursor:pointer}
@@ -300,9 +308,55 @@ function vistaUnidad(a,u){
       <span class="pie">${PLANTILLA.reduce((t,g)=>t+g.items.length,0)} secciones</span></a>`).join("")+`</div>`:"");
 }
 
+/* Ficha del equipo: editable desde la página; lo guardado pisa los datos de ESTRUCTURA */
+const CAMPOS_FICHA=[["referente","Referente operativo"],["lider","Líder operativo"],["equipo","Equipo"],["asesores","Asesores"]];
+let editandoFicha=false;
+function datosFicha(e){
+  const g=leerFicha(e.id), d={};
+  CAMPOS_FICHA.forEach(([k])=>{ d[k]=k in g?g[k]:e[k]; });
+  d.asesores=[].concat(d.asesores||[]).filter(Boolean);
+  return d;
+}
 function ficha(u,e){
-  const fila=(l,v)=>`<div class="dato"><div class="lbl">${l}</div><div class="val${v?"":" vacio"}">${esc(v||"A definir")}</div></div>`;
-  return `<div class="ficha">${fila("Unidad",u.titulo||u.nombre)}${fila("Referente operativo",e.referente)}${fila("Líder operativo",e.lider)}${fila("Equipo",e.equipo)}${fila("Asesores",[].concat(e.asesores||[]).join(", "))}</div>`;
+  const d=datosFicha(e);
+  const fila=(l,v)=>`<div class="dato"><div class="lbl">${l}</div><div class="val${v?"":" vacio"}">${v||"A definir"}</div></div>`;
+  if(!editandoFicha) return `<div class="ficha" id="ficha">${fila("Unidad",esc(u.titulo||u.nombre))}`+
+    CAMPOS_FICHA.map(([k,l])=>fila(l,k==="asesores"?d.asesores.map(esc).join("<br>"):esc(d[k]))).join("")+
+    `<button class="btn editar-ficha" id="editarFicha">Editar datos</button><p class="estado-ficha" id="fichaEstado"></p></div>`;
+  return `<div class="ficha editando" id="ficha">${fila("Unidad",esc(u.titulo||u.nombre))}`+
+    CAMPOS_FICHA.map(([k,l])=>`<label class="dato"><span class="lbl">${l}</span>`+(k==="asesores"
+      ?`<textarea data-f="${k}" rows="4" placeholder="Un asesor por línea">${esc(d.asesores.join("\n"))}</textarea>`
+      :`<input data-f="${k}" maxlength="80" value="${esc(d[k]||"")}" placeholder="A definir">`)+`</label>`).join("")+
+    `<div class="acciones-ficha"><button class="btn guardar" id="guardarFicha">Guardar</button><button class="btn" id="cancelarFicha">Cancelar</button></div>
+    <p class="estado-ficha" id="fichaEstado">${dbAsig?"":"Abierto desde la carpeta: se guarda solo en este navegador."}</p></div>`;
+}
+function leerFicha(id){
+  if(dbAsig) return FICHA[id]||{};
+  try{ return JSON.parse(localStorage.getItem("ficha_"+id))||{}; }catch(_){ return {}; }
+}
+function montarFicha(u,e){
+  const est=t=>{ const x=$("fichaEstado"); if(x) x.textContent=t; };
+  if(!editandoFicha){ $("editarFicha").onclick=()=>{ editandoFicha=true; repintarFicha(); const i=document.querySelector("#ficha [data-f]"); if(i) i.focus(); }; return; }
+  $("cancelarFicha").onclick=()=>{ editandoFicha=false; repintarFicha(); };
+  $("guardarFicha").onclick=()=>{
+    const d={};
+    document.querySelectorAll("#ficha [data-f]").forEach(x=>{ const k=x.dataset.f;
+      d[k]=k==="asesores"?x.value.split("\n").map(v=>v.trim()).filter(Boolean):x.value.trim(); });
+    if(!dbAsig){
+      try{ localStorage.setItem("ficha_"+e.id,JSON.stringify(d)); editandoFicha=false; repintarFicha(); est("Guardado en este navegador."); }
+      catch(_){ est("No se pudo guardar en este navegador."); }
+      return;
+    }
+    est("Guardando…"); $("guardarFicha").disabled=true;
+    colaFicha=colaFicha.then(()=>dbAsig.doc("ficha/"+e.id).set(d))
+      .then(()=>{ FICHA[e.id]=d; editandoFicha=false; repintarFicha(); est("Guardado."); })
+      .catch(err=>{ const b=$("guardarFicha"); if(b) b.disabled=false;
+        est(err&&err.code==="not_granted"?"No tenés permiso para editar estos datos.":"No se pudo guardar. Probá de nuevo."); });
+  };
+}
+function repintarFicha(){
+  const box=$("ficha"); if(!box||!empresaActual||!unidadActual) return;
+  box.outerHTML=ficha(unidadActual,empresaActual); montarFicha(unidadActual,empresaActual);
 }
 
 function vistaEmpresa(a,u,e){
@@ -334,7 +388,7 @@ function vistaEmpresa(a,u,e){
 }
 
 /* Pautas de asignación: guardado compartido (db) en claude.ai; local en la carpeta */
-const ASIG={}; let dbAsig=null, empresaActual=null, colaAsig=Promise.resolve();
+const ASIG={}, FICHA={}; let dbAsig=null, empresaActual=null, unidadActual=null, colaAsig=Promise.resolve(), colaFicha=Promise.resolve();
 function leerAsig(id){
   if(dbAsig) return ASIG[id]||{};
   try{ return JSON.parse(localStorage.getItem("asig_"+id))||{}; }catch(_){ return {}; }
@@ -385,7 +439,11 @@ function repintarAsig(foco,conservar=true){
   try{
     const db=window.claude&&typeof window.claude.use==="function"?await window.claude.use("db"):null;
     if(!db) return;
-    dbAsig=db; repintarAsig(false,false);
+    dbAsig=db; repintarAsig(false,false); if(!editandoFicha) repintarFicha();
+    db.collection("ficha").onSnapshot(snap=>{
+      snap.docChanges().forEach(c=>{ if(c.type==="removed") delete FICHA[c.doc.id]; else FICHA[c.doc.id]=c.doc.data()||{}; });
+      if(!editandoFicha) repintarFicha();
+    },()=>{});
     db.collection("asignacion").onSnapshot(snap=>{
       snap.docChanges().forEach(c=>{ if(c.type==="removed") delete ASIG[c.doc.id]; else ASIG[c.doc.id]=c.doc.data()||{}; });
       const box=$("asig"); if(box&&!box.contains(document.activeElement)) repintarAsig();
@@ -406,9 +464,10 @@ function render(){
   const u=a&&a.unidades.find(x=>x.id===ui);
   const e=u&&u.empresas.find(x=>x.id===ei);
   aplicarTema(e&&e.tema);
+  if(e!==empresaActual) editandoFicha=false;
   $("app").innerHTML= e?vistaEmpresa(a,u,e): u?vistaUnidad(a,u): a?vistaArea(a): vistaInicio();
   const ab=$("abrir"); if(ab) ab.onclick=()=>abrirManual(e);
-  empresaActual=e||null; if($("asig")) montarAsig(e);
+  empresaActual=e||null; unidadActual=u||null; if($("asig")) montarAsig(e); if($("ficha")) montarFicha(u,e);
   document.querySelectorAll("[data-sec]").forEach(b=>b.onclick=()=>{ if(!b.dataset.sec)return; seccionActual=b.dataset.sec; render();
     if(innerWidth<=900) document.querySelector(".seccion").scrollIntoView({behavior:"smooth",block:"start"}); });
 }
