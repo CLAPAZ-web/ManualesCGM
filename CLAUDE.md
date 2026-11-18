@@ -50,9 +50,16 @@ En las tarjetas el logo va sobre un recuadro blanco (para que se vean logos oscu
     1.5 Medios de pago · 1.6 Promos vigentes · 1.7 Tablas
 2 · Pautas de carga: 2.1 Capital · 2.2 Mínima · 2.3 Máxima · 2.4 Segmento · 2.5 Subcartera · 2.6 Etiquetas ·
     2.7 Notas de la operación · 2.8 Notas de la deuda · 2.9 Monto promoción
-3 · Pautas de asignación (próximamente a completar)
+3 · Pautas de asignación: 3.1 es un formulario (ver abajo)
 4 · Pautas administrativas (próximamente a completar)
-5 · Comercial (próximamente a completar)
+5 · Comercial: 5.1 Comisiones · 5.2 Contrato
+
+## Pautas de asignación (formulario en 3.1)
+Desplegables definidos en `CAMPOS_ASIG` (parte editable 5): Tipo de asignación (Stock/Actualización/Ambos),
+Frecuencia de envío (Diaria/Semanal/Quincenal/Mensual), ¿Se recibe actualización? (Sí/No),
+Frecuencia envío actualización (Nunca/Diaria/Semanal/Quincenal) + Reportería (lista libre, se agregan/quitan reportes).
+Guardado: en el link de claude.ai, base de datos del artifact (capability `db`, colección `asignacion`, un doc por
+id de empresa), compartida para todos. Abierto desde la carpeta (file://), localStorage de ese navegador.
 
 ## Ficha del equipo (recuadro sobre el índice)
 Unidad · Referente operativo · Líder operativo · Equipo · Asesores (en ese orden; asesores es una lista). Sin cotizaciones del dólar (se quitaron a pedido).
