@@ -12,6 +12,8 @@ Se comparte copiando la carpeta completa a una carpeta compartida; las rutas son
 - `cobranza/<unidad>/<empresa>/` — carpeta de cada empresa. `cobranza/cesiones/mercurius/` lleva el paquete
   original "Manual Cesiones" (Construir manual.bat + build/), que es el modelo de referencia.
 - `ventas/`, `otros/` — áreas todavía sin contenido ("Próximamente").
+- `entrega/` — documento de traspaso para desarrollar el portal en otro sistema: `Estructura_EMPRESAS_CGMA.html`
+  (estructura, pantallas, formularios, modelo de datos) + `Datos_adicionales_EMPRESAS_CGMA.md` (datos concretos).
 
 ## Navegación (3 niveles, por hash de URL)
 - `#inicio` → tarjetas de áreas: COBRANZA, VENTAS, OTROS (Ventas y Otros atenuadas, "Próximamente").
