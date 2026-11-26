@@ -213,10 +213,9 @@ const PLANTILLA = [
     ["1.7","Tablas","Tablas de refinanciación y cálculo de cuotas."],
   ]},
   { n:"2", grupo:"Pautas de carga", items:[
-    ["2.1","Montos","Criterios para cargar el capital, la mínima y la máxima de cada operación.","montos"],
+    ["2.1","Montos","Criterios para cargar el capital, la mínima, la máxima y el monto de promoción de cada operación.","montos"],
     ["2.2","Segmento, subcartera y etiquetas","Cómo se clasifica la operación: segmento, subcartera y etiquetas a aplicar.","clasificacion"],
     ["2.3","Notas","Qué información se registra en las notas de la operación y de la deuda.","notas"],
-    ["2.4","Monto promoción","Cómo se calcula y se carga el monto de la promoción."],
   ]},
   { n:"3", grupo:"Pautas de asignación", items:[
     ["3.1","Pautas de asignación","Cómo envía la empresa la asignación de cuentas y qué reportes se le devuelven.","asignacion"],
@@ -461,7 +460,8 @@ function repintarAsig(foco,conservar=true){
 const FORMS_TEXTO={
   montos:[["capital","Capital","Cómo se carga el capital adeudado en el sistema."],
           ["minima","Mínima","Criterio para cargar el monto mínimo."],
-          ["maxima","Máxima","Criterio para cargar el monto máximo."]],
+          ["maxima","Máxima","Criterio para cargar el monto máximo."],
+          ["promocion","Monto promoción","Cómo se calcula y se carga el monto de la promoción."]],
   clasificacion:[["segmento","Segmento","Qué segmento se asigna a la operación y cómo se carga."],
           ["subcartera","Subcartera","A qué subcartera corresponde la operación y cómo identificarla."],
           ["etiquetas","Etiquetas","Etiquetas que se usan y cuándo corresponde aplicar cada una."]],

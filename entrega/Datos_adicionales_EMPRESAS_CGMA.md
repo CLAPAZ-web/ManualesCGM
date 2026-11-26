@@ -86,10 +86,9 @@ Desde la página no se cargó todavía ninguna ficha adicional.
 
 ### 2 · Pautas de carga
 
-- **2.1 Montos** **[formulario]**: Criterios para cargar el capital, la mínima y la máxima de cada operación.
+- **2.1 Montos** **[formulario]**: Criterios para cargar el capital, la mínima, la máxima y el monto de promoción de cada operación.
 - **2.2 Segmento, subcartera y etiquetas** **[formulario]**: Cómo se clasifica la operación: segmento, subcartera y etiquetas a aplicar.
 - **2.3 Notas** **[formulario]**: Qué información se registra en las notas de la operación y de la deuda.
-- **2.4 Monto promoción**: Cómo se calcula y se carga el monto de la promoción.
 
 ### 3 · Pautas de asignación
 
@@ -160,6 +159,6 @@ Base CGM&A (sin tema propio): fondo `#0b1f45`, tarjeta `#10285a`, tarjeta2 `#163
 ## 9. Notas técnicas del prototipo
 
 - Navegación por la dirección de la página: `#inicio`, `#cobranza`, `#cobranza-tardia`, `#cobranza-tardia-itau` (niveles separados por guion; por eso los id no llevan guiones).
-- Ficha, Montos, Segmento/subcartera/etiquetas, Notas y Pautas de asignación se guardan en una base de datos compartida, un registro por empresa: colección `ficha` (referente, lider, equipo, asesores[]), `montos` (capital, minima, maxima), `clasificacion` (segmento, subcartera, etiquetas), `notas` (operacion, deuda) y `asignacion` (tipo, frecuencia, recibeAct, frecuenciaAct, reporteria[]).
+- Ficha, Montos, Segmento/subcartera/etiquetas, Notas y Pautas de asignación se guardan en una base de datos compartida, un registro por empresa: colección `ficha` (referente, lider, equipo, asesores[]), `montos` (capital, minima, maxima, promocion), `clasificacion` (segmento, subcartera, etiquetas), `notas` (operacion, deuda) y `asignacion` (tipo, frecuencia, recibeAct, frecuenciaAct, reporteria[]).
 - Los valores de la ficha definidos en el prototipo funcionan como valores iniciales; lo cargado desde la página los reemplaza.
 - Las empresas sin `tema` usan los colores de CGM&A; las que tienen logo lo muestran como título de su página.
