@@ -50,11 +50,16 @@ En las tarjetas el logo va sobre un recuadro blanco (para que se vean logos oscu
 ## Índice acordado (glosario base, tomado de Mercurius)
 1 · Manual: 1.1 Quién es {EMPRESA} · 1.2 Productos · 1.3 Montos a cobrar · 1.4 Pautas de gestión ·
     1.5 Medios de pago · 1.6 Promos vigentes · 1.7 Tablas
-2 · Pautas de carga: 2.1 Capital · 2.2 Mínima · 2.3 Máxima · 2.4 Segmento · 2.5 Subcartera · 2.6 Etiquetas ·
-    2.7 Notas de la operación · 2.8 Notas de la deuda · 2.9 Monto promoción
+2 · Pautas de carga: 2.1 Montos (formulario: Capital, Mínima, Máxima) · 2.2 Segmento · 2.3 Subcartera ·
+    2.4 Etiquetas · 2.5 Notas de la operación · 2.6 Notas de la deuda · 2.7 Monto promoción
 3 · Pautas de asignación: 3.1 es un formulario (ver abajo)
 4 · Pautas administrativas (próximamente a completar)
 5 · Comercial: 5.1 Comisiones · 5.2 Contrato
+
+## Montos (formulario en 2.1)
+Tres cuadros de texto libre por empresa (Capital, Mínima, Máxima; `CAMPOS_MONTOS`). Se guarda solo al escribir
+(0,9 s de pausa) y al salir del cuadro o cambiar de sección. Colección `montos` del db (doc por id de empresa:
+capital, minima, maxima); localStorage `montos_<id>` en la carpeta.
 
 ## Pautas de asignación (formulario en 3.1)
 Desplegables definidos en `CAMPOS_ASIG` (parte editable 5): Tipo de asignación (Stock/Actualización/Stock y actualización/Sólo ingreso/Stock e ingreso),

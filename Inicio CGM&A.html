@@ -94,6 +94,13 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(2rem,4.5vw,2.75rem
 .asig .vacio-rep{color:var(--tenue);font-style:italic}
 .asig .agregar{display:flex;gap:8px}
 .asig .agregar input{flex:1}
+.montos{display:grid;gap:22px;max-width:760px}
+.montos .monto{display:flex;flex-direction:column;gap:4px}
+.montos .monto-tit{font-family:var(--display);font-weight:700;font-size:1.2rem}
+.montos .monto-ayuda{color:var(--suave);font-size:.9rem;margin-bottom:4px}
+.montos textarea{font:inherit;font-size:.98rem;line-height:1.5;color:var(--texto);background:var(--tarjeta2);border:1px solid var(--linea);border-radius:8px;padding:10px 12px;width:100%;resize:vertical;min-height:110px}
+.montos textarea:focus-visible{outline:2px solid var(--oro);outline-offset:2px}
+.montos .estado{margin:0;font-size:.85rem;color:var(--tenue);min-height:1.3em}
 .asig .estado{grid-column:1/-1;margin:0;font-size:.85rem;color:var(--tenue);min-height:1.3em}
 @media (max-width:560px){.asig{grid-template-columns:minmax(0,1fr)}.asig .agregar{flex-direction:column}}
 .nav-sec{display:flex;justify-content:space-between;gap:12px;margin-top:28px;flex-wrap:wrap}
@@ -206,15 +213,13 @@ const PLANTILLA = [
     ["1.7","Tablas","Tablas de refinanciación y cálculo de cuotas."],
   ]},
   { n:"2", grupo:"Pautas de carga", items:[
-    ["2.1","Capital","Cómo se carga el capital adeudado en el sistema."],
-    ["2.2","Mínima","Criterio para cargar el monto mínimo."],
-    ["2.3","Máxima","Criterio para cargar el monto máximo."],
-    ["2.4","Segmento","Qué segmento se asigna a la operación y cómo se carga."],
-    ["2.5","Subcartera","A qué subcartera corresponde la operación y cómo identificarla."],
-    ["2.6","Etiquetas","Etiquetas que se usan y cuándo corresponde aplicar cada una."],
-    ["2.7","Notas de la operación","Qué información se registra en las notas de la operación."],
-    ["2.8","Notas de la deuda","Qué información se registra en las notas de la deuda."],
-    ["2.9","Monto promoción","Cómo se calcula y se carga el monto de la promoción."],
+    ["2.1","Montos","Criterios para cargar el capital, la mínima y la máxima de cada operación.","montos"],
+    ["2.2","Segmento","Qué segmento se asigna a la operación y cómo se carga."],
+    ["2.3","Subcartera","A qué subcartera corresponde la operación y cómo identificarla."],
+    ["2.4","Etiquetas","Etiquetas que se usan y cuándo corresponde aplicar cada una."],
+    ["2.5","Notas de la operación","Qué información se registra en las notas de la operación."],
+    ["2.6","Notas de la deuda","Qué información se registra en las notas de la deuda."],
+    ["2.7","Monto promoción","Cómo se calcula y se carga el monto de la promoción."],
   ]},
   { n:"3", grupo:"Pautas de asignación", items:[
     ["3.1","Pautas de asignación","Cómo envía la empresa la asignación de cuentas y qué reportes se le devuelven.","asignacion"],
@@ -378,7 +383,7 @@ function vistaEmpresa(a,u,e){
       <div class="eyebrow">${it[0]} · ${esc(PLANTILLA.find(g=>g.items.includes(it)).grupo)}</div>
       <h2>${esc(t(it[1]))}</h2>
       <p class="bajada">${esc(t(it[2]))}</p>
-      ${it[3]==="asignacion"?formAsig(e):texto?`<div class="cuerpo">${texto}</div>`:`<div class="pendiente">${PLANTILLA.find(g=>g.items.includes(it)).proximamente?"Esta sección se va a completar próximamente.":"Aquí va el contenido de la sección adaptado a "+esc(e.nombre)+"."}</div>`}
+      ${it[3]==="asignacion"?formAsig(e):it[3]==="montos"?formMontos(e):texto?`<div class="cuerpo">${texto}</div>`:`<div class="pendiente">${PLANTILLA.find(g=>g.items.includes(it)).proximamente?"Esta sección se va a completar próximamente.":"Aquí va el contenido de la sección adaptado a "+esc(e.nombre)+"."}</div>`}
       <div class="nav-sec">
         <button class="btn" data-sec="${idx>0?items[idx-1][0]:""}" ${idx>0?"":"disabled"}>← ${idx>0?esc(t(items[idx-1][1])):"Anterior"}</button>
         <button class="btn" data-sec="${idx<items.length-1?items[idx+1][0]:""}" ${idx<items.length-1?"":"disabled"}>${idx<items.length-1?esc(t(items[idx+1][1])):"Siguiente"} →</button>
@@ -439,10 +444,14 @@ function repintarAsig(foco,conservar=true){
   try{
     const db=window.claude&&typeof window.claude.use==="function"?await window.claude.use("db"):null;
     if(!db) return;
-    dbAsig=db; repintarAsig(false,false); if(!editandoFicha) repintarFicha();
+    dbAsig=db; repintarAsig(false,false); repintarMontos(false); if(!editandoFicha) repintarFicha();
     db.collection("ficha").onSnapshot(snap=>{
       snap.docChanges().forEach(c=>{ if(c.type==="removed") delete FICHA[c.doc.id]; else FICHA[c.doc.id]=c.doc.data()||{}; });
       if(!editandoFicha) repintarFicha();
+    },()=>{});
+    db.collection("montos").onSnapshot(snap=>{
+      snap.docChanges().forEach(c=>{ if(c.type==="removed") delete MONTOS[c.doc.id]; else MONTOS[c.doc.id]=c.doc.data()||{}; });
+      const box=$("montos"); if(box&&!box.contains(document.activeElement)&&!montosPendiente) repintarMontos();
     },()=>{});
     db.collection("asignacion").onSnapshot(snap=>{
       snap.docChanges().forEach(c=>{ if(c.type==="removed") delete ASIG[c.doc.id]; else ASIG[c.doc.id]=c.doc.data()||{}; });
@@ -450,6 +459,51 @@ function repintarAsig(foco,conservar=true){
     },()=>{});
   }catch(_){}
 })();
+/* Montos (2.1): texto propio de cada empresa para capital, mínima y máxima; se guarda al escribir */
+const MONTOS={}; let colaMontos=Promise.resolve(), montosPendiente=null, montosTimer=null;
+const CAMPOS_MONTOS=[["capital","Capital","Cómo se carga el capital adeudado en el sistema."],
+  ["minima","Mínima","Criterio para cargar el monto mínimo."],["maxima","Máxima","Criterio para cargar el monto máximo."]];
+function leerMontos(id){
+  if(dbAsig) return MONTOS[id]||{};
+  try{ return JSON.parse(localStorage.getItem("montos_"+id))||{}; }catch(_){ return {}; }
+}
+function formMontos(e){
+  const d=leerMontos(e.id);
+  return `<div class="montos" id="montos">`+CAMPOS_MONTOS.map(([k,l,ayuda])=>`<label class="monto"><span class="monto-tit">${l}</span>
+    <span class="monto-ayuda">${ayuda}</span><textarea data-m="${k}" rows="5" placeholder="Escribí acá el criterio de ${l.toLowerCase()} para ${esc(e.nombre)}…">${esc(d[k]||"")}</textarea></label>`).join("")+
+    `<p class="estado" id="montosEstado">${dbAsig?"":"Abierto desde la carpeta: lo que escribas se guarda solo en este navegador."}</p></div>`;
+}
+function guardarMontos(){
+  if(!montosPendiente) return;
+  const {id,datos}=montosPendiente; montosPendiente=null; clearTimeout(montosTimer); montosTimer=null;
+  const est=t=>{ const x=$("montosEstado"); if(x) x.textContent=t; };
+  if(!dbAsig){
+    try{ localStorage.setItem("montos_"+id,JSON.stringify(datos)); est("Guardado en este navegador."); }catch(_){ est("No se pudo guardar en este navegador."); }
+    return;
+  }
+  MONTOS[id]=datos; est("Guardando…");
+  colaMontos=colaMontos.then(()=>dbAsig.doc("montos/"+id).set(datos))
+    .then(()=>{ if(!montosPendiente) est("Guardado."); })
+    .catch(err=>est(err&&err.code==="not_granted"?"No tenés permiso para editar estos datos.":"No se pudo guardar. Probá de nuevo."));
+}
+function montarMontos(e){
+  document.querySelectorAll("#montos [data-m]").forEach(t=>{
+    t.oninput=()=>{
+      const datos={...leerMontos(e.id)};
+      document.querySelectorAll("#montos [data-m]").forEach(x=>{ datos[x.dataset.m]=x.value; });
+      montosPendiente={id:e.id,datos};
+      const x=$("montosEstado"); if(x) x.textContent="Sin guardar…";
+      clearTimeout(montosTimer); montosTimer=setTimeout(guardarMontos,900);
+    };
+    t.onblur=guardarMontos;
+  });
+}
+function repintarMontos(conservar=true){
+  const box=$("montos"); if(!box||!empresaActual) return;
+  const est=$("montosEstado").textContent;
+  box.outerHTML=formMontos(empresaActual); montarMontos(empresaActual);
+  if(conservar&&est) $("montosEstado").textContent=est;
+}
 let temaActual=null;
 function aplicarTema(t){
   const r=document.documentElement.style;
@@ -459,6 +513,7 @@ function aplicarTema(t){
   if(t) for(const k in t){ if(k==="esquema") r.colorScheme=t[k]; else r.setProperty("--"+k,t[k]); }
 }
 function render(){
+  guardarMontos();
   const [ai,ui,ei]=(location.hash.slice(1)||"inicio").split("-");
   const a=ESTRUCTURA.find(x=>x.id===ai&&!x.proximamente);
   const u=a&&a.unidades.find(x=>x.id===ui);
@@ -467,7 +522,7 @@ function render(){
   if(e!==empresaActual) editandoFicha=false;
   $("app").innerHTML= e?vistaEmpresa(a,u,e): u?vistaUnidad(a,u): a?vistaArea(a): vistaInicio();
   const ab=$("abrir"); if(ab) ab.onclick=()=>abrirManual(e);
-  empresaActual=e||null; unidadActual=u||null; if($("asig")) montarAsig(e); if($("ficha")) montarFicha(u,e);
+  empresaActual=e||null; unidadActual=u||null; if($("asig")) montarAsig(e); if($("montos")) montarMontos(e); if($("ficha")) montarFicha(u,e);
   document.querySelectorAll("[data-sec]").forEach(b=>b.onclick=()=>{ if(!b.dataset.sec)return; seccionActual=b.dataset.sec; render();
     if(innerWidth<=900) document.querySelector(".seccion").scrollIntoView({behavior:"smooth",block:"start"}); });
 }

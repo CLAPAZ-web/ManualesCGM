@@ -97,7 +97,7 @@ footer{color:var(--suave);font-size:.85rem;text-align:center;padding-bottom:30px
   </div>
   <h3>Cifras actuales</h3>
   <div class="tabla"><table><tr><th>Áreas</th><th>Unidades (Cobranza)</th><th>Empresas cargadas</th><th>Secciones por empresa</th><th>Empresas con logo y colores</th></tr>
-  <tr><td>3 (1 activa)</td><td>5</td><td>21</td><td>20 (en 5 grupos)</td><td>6</td></tr></table></div>
+  <tr><td>3 (1 activa)</td><td>5</td><td>21</td><td>18 (en 5 grupos)</td><td>6</td></tr></table></div>
   <p class="notas">El detalle completo de empresas, colores, opciones y datos ya cargados está en el archivo adjunto <b>Datos_adicionales_EMPRESAS_CGMA.md</b>.</p>
 </section>
 
@@ -150,8 +150,8 @@ footer{color:var(--suave);font-size:.85rem;text-align:center;padding-bottom:30px
 
 <section id="indice">
   <h2><span class="n">5</span>Índice común a todas las empresas</h2>
-  <p class="lead">Todas las empresas comparten la misma estructura de 20 secciones. "[Empresa]" se reemplaza por el nombre de cada una. Agregar o cambiar una sección acá impacta en todas.</p>
-  <div class="indice"><div class="grupo"><h4>1 · Manual</h4><ol><li><span>1.1</span>Quién es [Empresa]</li><li><span>1.2</span>Productos</li><li><span>1.3</span>Montos a cobrar</li><li><span>1.4</span>Pautas de gestión</li><li><span>1.5</span>Medios de pago</li><li><span>1.6</span>Promos vigentes</li><li><span>1.7</span>Tablas</li></ol></div><div class="grupo"><h4>2 · Pautas de carga</h4><ol><li><span>2.1</span>Capital</li><li><span>2.2</span>Mínima</li><li><span>2.3</span>Máxima</li><li><span>2.4</span>Segmento</li><li><span>2.5</span>Subcartera</li><li><span>2.6</span>Etiquetas</li><li><span>2.7</span>Notas de la operación</li><li><span>2.8</span>Notas de la deuda</li><li><span>2.9</span>Monto promoción</li></ol></div><div class="grupo"><h4>3 · Pautas de asignación</h4><ol><li><span>3.1</span>Pautas de asignación <em>formulario</em></li></ol></div><div class="grupo"><h4>4 · Pautas administrativas <em>Próximamente</em></h4><ol><li><span>4.1</span>Pautas administrativas</li></ol></div><div class="grupo"><h4>5 · Comercial</h4><ol><li><span>5.1</span>Comisiones</li><li><span>5.2</span>Contrato</li></ol></div></div>
+  <p class="lead">Todas las empresas comparten la misma estructura de 18 secciones. "[Empresa]" se reemplaza por el nombre de cada una. Agregar o cambiar una sección acá impacta en todas.</p>
+  <div class="indice"><div class="grupo"><h4>1 · Manual</h4><ol><li><span>1.1</span>Quién es [Empresa]</li><li><span>1.2</span>Productos</li><li><span>1.3</span>Montos a cobrar</li><li><span>1.4</span>Pautas de gestión</li><li><span>1.5</span>Medios de pago</li><li><span>1.6</span>Promos vigentes</li><li><span>1.7</span>Tablas</li></ol></div><div class="grupo"><h4>2 · Pautas de carga</h4><ol><li><span>2.1</span>Montos <em>formulario</em></li><li><span>2.2</span>Segmento</li><li><span>2.3</span>Subcartera</li><li><span>2.4</span>Etiquetas</li><li><span>2.5</span>Notas de la operación</li><li><span>2.6</span>Notas de la deuda</li><li><span>2.7</span>Monto promoción</li></ol></div><div class="grupo"><h4>3 · Pautas de asignación</h4><ol><li><span>3.1</span>Pautas de asignación <em>formulario</em></li></ol></div><div class="grupo"><h4>4 · Pautas administrativas <em>Próximamente</em></h4><ol><li><span>4.1</span>Pautas administrativas</li></ol></div><div class="grupo"><h4>5 · Comercial</h4><ol><li><span>5.1</span>Comisiones</li><li><span>5.2</span>Contrato</li></ol></div></div>
 </section>
 
 <section id="formularios">
@@ -160,13 +160,19 @@ footer{color:var(--suave);font-size:.85rem;text-align:center;padding-bottom:30px
   <p class="lead">Recuadro sobre el índice. Botón <b>Editar datos</b> → los campos pasan a ser editables → <b>Guardar</b> / <b>Cancelar</b>.</p>
   <div class="tabla"><table><tr><th>Campo</th><th>Tipo</th></tr><tr><td>Unidad</td><td>Fija: la unidad a la que pertenece la empresa (no editable).</td></tr><tr><td>Referente operativo</td><td>Texto libre, una persona.</td></tr><tr><td>Líder operativo</td><td>Texto libre, una persona.</td></tr><tr><td>Equipo</td><td>Texto libre.</td></tr><tr><td>Asesores</td><td>Lista: uno o varios nombres (uno por línea al editar).</td></tr></table></div>
   <p class="notas">Vacío se muestra como "A definir". Orden fijo: Unidad, Referente operativo, Líder operativo, Equipo, Asesores.</p>
-  <h3>6.2 Pautas de asignación (sección 3.1)</h3>
+  <h3>6.2 Montos (sección 2.1)</h3>
+  <p class="lead">La sección muestra tres apartados con un cuadro de texto libre cada uno, propio de cada empresa. Se guarda automáticamente mientras se escribe (y al salir del cuadro).</p>
+  <div class="tabla"><table><tr><th>Apartado</th><th>Ayuda que se muestra</th></tr>
+    <tr><td>Capital</td><td>Cómo se carga el capital adeudado en el sistema.</td></tr>
+    <tr><td>Mínima</td><td>Criterio para cargar el monto mínimo.</td></tr>
+    <tr><td>Máxima</td><td>Criterio para cargar el monto máximo.</td></tr></table></div>
+  <h3>6.3 Pautas de asignación (sección 3.1)</h3>
   <p class="lead">En lugar de texto, la sección muestra un formulario. Cada cambio se guarda automáticamente.</p>
   <div class="tabla"><table><tr><th>Campo</th><th>Tipo</th><th>Opciones</th></tr><tr><td>Tipo de asignación</td><td>Desplegable (una opción)</td><td>Stock · Actualización · Stock y actualización · Sólo ingreso · Stock e ingreso</td></tr><tr><td>Frecuencia de envío</td><td>Desplegable (una opción)</td><td>Diaria · Semanal · Quincenal · Mensual</td></tr><tr><td>¿Se recibe actualización?</td><td>Desplegable (una opción)</td><td>Sí · No</td></tr><tr><td>Frecuencia envío actualización</td><td>Desplegable (una opción)</td><td>Nunca · Diaria · Semanal · Quincenal</td></tr>
     <tr><td>Reportería</td><td>Lista libre</td><td>El usuario escribe el nombre de un reporte y lo agrega; cada reporte se puede quitar. Sin duplicados.</td></tr></table></div>
-  <h3>6.3 Guardado y permisos</h3>
+  <h3>6.4 Guardado y permisos</h3>
   <ul class="notas">
-    <li>Los datos de ambos formularios se guardan <b>por empresa</b> y son <b>compartidos</b>: lo que carga una persona lo ven todas.</li>
+    <li>Los datos de los tres formularios se guardan <b>por empresa</b> y son <b>compartidos</b>: lo que carga una persona lo ven todas.</li>
     <li>Pueden ver los datos quienes tengan acceso al portal; pueden editarlos quienes tengan permiso de edición. Si no hay permiso, se informa "No tenés permiso para editar estos datos".</li>
     <li>Se muestra un estado breve: "Guardando…", "Guardado." o el error correspondiente.</li>
   </ul>
@@ -180,6 +186,7 @@ footer{color:var(--suave);font-size:.85rem;text-align:center;padding-bottom:30px
     <tr><td><b>Unidad</b></td><td>id, nombre (MAYÚSCULAS), título para la ficha</td><td>Pertenece a un Área · tiene muchas Empresas</td></tr>
     <tr><td><b>Empresa</b></td><td>id (sin espacios ni guiones), nombre, logo, tema de colores, bajada, enlace a manual completo (opcional)</td><td>Pertenece a una Unidad · tiene una Ficha, una Asignación y contenido por sección</td></tr>
     <tr><td><b>Ficha del equipo</b></td><td>referente, líder, equipo, asesores (lista)</td><td>1 por Empresa</td></tr>
+    <tr><td><b>Montos</b></td><td>capital, minima, maxima (texto libre)</td><td>1 por Empresa</td></tr>
     <tr><td><b>Pautas de asignación</b></td><td>tipo, frecuencia, recibeAct, frecuenciaAct, reportería (lista)</td><td>1 por Empresa</td></tr>
     <tr><td><b>Sección (plantilla)</b></td><td>número, grupo, título, bajada, tipo (texto o formulario), próximamente</td><td>Común a todas las Empresas</td></tr>
     <tr><td><b>Contenido</b></td><td>empresa, número de sección, texto con formato</td><td>Empresa × Sección</td></tr>

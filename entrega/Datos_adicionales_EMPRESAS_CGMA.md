@@ -86,15 +86,13 @@ Desde la página no se cargó todavía ninguna ficha adicional.
 
 ### 2 · Pautas de carga
 
-- **2.1 Capital**: Cómo se carga el capital adeudado en el sistema.
-- **2.2 Mínima**: Criterio para cargar el monto mínimo.
-- **2.3 Máxima**: Criterio para cargar el monto máximo.
-- **2.4 Segmento**: Qué segmento se asigna a la operación y cómo se carga.
-- **2.5 Subcartera**: A qué subcartera corresponde la operación y cómo identificarla.
-- **2.6 Etiquetas**: Etiquetas que se usan y cuándo corresponde aplicar cada una.
-- **2.7 Notas de la operación**: Qué información se registra en las notas de la operación.
-- **2.8 Notas de la deuda**: Qué información se registra en las notas de la deuda.
-- **2.9 Monto promoción**: Cómo se calcula y se carga el monto de la promoción.
+- **2.1 Montos** **[formulario]**: Criterios para cargar el capital, la mínima y la máxima de cada operación.
+- **2.2 Segmento**: Qué segmento se asigna a la operación y cómo se carga.
+- **2.3 Subcartera**: A qué subcartera corresponde la operación y cómo identificarla.
+- **2.4 Etiquetas**: Etiquetas que se usan y cuándo corresponde aplicar cada una.
+- **2.5 Notas de la operación**: Qué información se registra en las notas de la operación.
+- **2.6 Notas de la deuda**: Qué información se registra en las notas de la deuda.
+- **2.7 Monto promoción**: Cómo se calcula y se carga el monto de la promoción.
 
 ### 3 · Pautas de asignación
 
@@ -165,6 +163,6 @@ Base CGM&A (sin tema propio): fondo `#0b1f45`, tarjeta `#10285a`, tarjeta2 `#163
 ## 9. Notas técnicas del prototipo
 
 - Navegación por la dirección de la página: `#inicio`, `#cobranza`, `#cobranza-tardia`, `#cobranza-tardia-itau` (niveles separados por guion; por eso los id no llevan guiones).
-- Ficha y Pautas de asignación se guardan en una base de datos compartida, un registro por empresa: colección `ficha` (referente, lider, equipo, asesores[]) y colección `asignacion` (tipo, frecuencia, recibeAct, frecuenciaAct, reporteria[]).
+- Ficha, Montos y Pautas de asignación se guardan en una base de datos compartida, un registro por empresa: colección `ficha` (referente, lider, equipo, asesores[]), colección `montos` (capital, minima, maxima) y colección `asignacion` (tipo, frecuencia, recibeAct, frecuenciaAct, reporteria[]).
 - Los valores de la ficha definidos en el prototipo funcionan como valores iniciales; lo cargado desde la página los reemplaza.
 - Las empresas sin `tema` usan los colores de CGM&A; las que tienen logo lo muestran como título de su página.
