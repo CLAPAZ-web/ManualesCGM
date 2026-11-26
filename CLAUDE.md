@@ -64,7 +64,8 @@ Doc por id de empresa en la colección del tipo; localStorage `<tipo>_<id>` en l
 
 ## Pautas de asignación (formulario en 3.1)
 Desplegables definidos en `CAMPOS_ASIG` (parte editable 5): Tipo de asignación (Stock/Actualización/Stock y actualización/Sólo ingreso/Stock e ingreso),
-Frecuencia de envío (Diaria/Semanal/Quincenal/Mensual), ¿Se recibe actualización? (Sí/No),
+Frecuencia de envío (Diaria/Semanal/Quincenal/Mensual), Canal de envío (MAIL/FTP/API/CONNECT/WEB SERVICES),
+¿Se recibe actualización? (Sí/No),
 Frecuencia envío actualización (Nunca/Diaria/Semanal/Quincenal) + Reportería (lista libre, se agregan/quitan reportes).
 Guardado: en el link de claude.ai, base de datos del artifact (capability `db`, colección `asignacion`, un doc por
 id de empresa), compartida para todos. Abierto desde la carpeta (file://), localStorage de ese navegador.

@@ -109,6 +109,7 @@ Desde la página no se cargó todavía ninguna ficha adicional.
 |---|---|---|
 | Tipo de asignación | `tipo` | Stock · Actualización · Stock y actualización · Sólo ingreso · Stock e ingreso |
 | Frecuencia de envío | `frecuencia` | Diaria · Semanal · Quincenal · Mensual |
+| Canal de envío | `canal` | MAIL · FTP · API · CONNECT · WEB SERVICES |
 | ¿Se recibe actualización? | `recibeAct` | Sí · No |
 | Frecuencia envío actualización | `frecuenciaAct` | Nunca · Diaria · Semanal · Quincenal |
 | Reportería | `reporteria` | Lista libre (se agregan y quitan reportes) |
@@ -159,6 +160,6 @@ Base CGM&A (sin tema propio): fondo `#0b1f45`, tarjeta `#10285a`, tarjeta2 `#163
 ## 9. Notas técnicas del prototipo
 
 - Navegación por la dirección de la página: `#inicio`, `#cobranza`, `#cobranza-tardia`, `#cobranza-tardia-itau` (niveles separados por guion; por eso los id no llevan guiones).
-- Ficha, Montos, Segmento/subcartera/etiquetas, Notas y Pautas de asignación se guardan en una base de datos compartida, un registro por empresa: colección `ficha` (referente[], lider[], equipo[], asesores[]), `montos` (capital, minima, maxima, promocion), `clasificacion` (segmento, subcartera, etiquetas), `notas` (operacion, deuda) y `asignacion` (tipo, frecuencia, recibeAct, frecuenciaAct, reporteria[]).
+- Ficha, Montos, Segmento/subcartera/etiquetas, Notas y Pautas de asignación se guardan en una base de datos compartida, un registro por empresa: colección `ficha` (referente[], lider[], equipo[], asesores[]), `montos` (capital, minima, maxima, promocion), `clasificacion` (segmento, subcartera, etiquetas), `notas` (operacion, deuda) y `asignacion` (tipo, frecuencia, canal, recibeAct, frecuenciaAct, reporteria[]).
 - Los valores de la ficha definidos en el prototipo funcionan como valores iniciales; lo cargado desde la página los reemplaza.
 - Las empresas sin `tema` usan los colores de CGM&A; las que tienen logo lo muestran como título de su página.

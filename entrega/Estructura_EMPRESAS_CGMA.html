@@ -180,7 +180,7 @@ footer{color:var(--suave);font-size:.85rem;text-align:center;padding-bottom:30px
     <tr><td>Notas de la deuda</td><td>Qué información se registra en las notas de la deuda.</td></tr></table></div>
   <h3>6.5 Pautas de asignación (sección 3.1)</h3>
   <p class="lead">En lugar de texto, la sección muestra un formulario. Cada cambio se guarda automáticamente.</p>
-  <div class="tabla"><table><tr><th>Campo</th><th>Tipo</th><th>Opciones</th></tr><tr><td>Tipo de asignación</td><td>Desplegable (una opción)</td><td>Stock · Actualización · Stock y actualización · Sólo ingreso · Stock e ingreso</td></tr><tr><td>Frecuencia de envío</td><td>Desplegable (una opción)</td><td>Diaria · Semanal · Quincenal · Mensual</td></tr><tr><td>¿Se recibe actualización?</td><td>Desplegable (una opción)</td><td>Sí · No</td></tr><tr><td>Frecuencia envío actualización</td><td>Desplegable (una opción)</td><td>Nunca · Diaria · Semanal · Quincenal</td></tr>
+  <div class="tabla"><table><tr><th>Campo</th><th>Tipo</th><th>Opciones</th></tr><tr><td>Tipo de asignación</td><td>Desplegable (una opción)</td><td>Stock · Actualización · Stock y actualización · Sólo ingreso · Stock e ingreso</td></tr><tr><td>Frecuencia de envío</td><td>Desplegable (una opción)</td><td>Diaria · Semanal · Quincenal · Mensual</td></tr><tr><td>Canal de envío</td><td>Desplegable (una opción)</td><td>MAIL · FTP · API · CONNECT · WEB SERVICES</td></tr><tr><td>¿Se recibe actualización?</td><td>Desplegable (una opción)</td><td>Sí · No</td></tr><tr><td>Frecuencia envío actualización</td><td>Desplegable (una opción)</td><td>Nunca · Diaria · Semanal · Quincenal</td></tr>
     <tr><td>Reportería</td><td>Lista libre</td><td>El usuario escribe el nombre de un reporte y lo agrega; cada reporte se puede quitar. Sin duplicados.</td></tr></table></div>
   <h3>6.6 Guardado y permisos</h3>
   <ul class="notas">
@@ -201,7 +201,7 @@ footer{color:var(--suave);font-size:.85rem;text-align:center;padding-bottom:30px
     <tr><td><b>Montos</b></td><td>capital, minima, maxima, promocion (texto libre)</td><td>1 por Empresa</td></tr>
     <tr><td><b>Clasificación</b></td><td>segmento, subcartera, etiquetas (texto libre)</td><td>1 por Empresa</td></tr>
     <tr><td><b>Notas</b></td><td>operacion, deuda (texto libre)</td><td>1 por Empresa</td></tr>
-    <tr><td><b>Pautas de asignación</b></td><td>tipo, frecuencia, recibeAct, frecuenciaAct, reportería (lista)</td><td>1 por Empresa</td></tr>
+    <tr><td><b>Pautas de asignación</b></td><td>tipo, frecuencia, canal, recibeAct, frecuenciaAct, reportería (lista)</td><td>1 por Empresa</td></tr>
     <tr><td><b>Sección (plantilla)</b></td><td>número, grupo, título, bajada, tipo (texto o formulario), próximamente</td><td>Común a todas las Empresas</td></tr>
     <tr><td><b>Contenido</b></td><td>empresa, número de sección, texto con formato</td><td>Empresa × Sección</td></tr>
     <tr><td><b>Tema</b></td><td>cabecera, fondo, tarjeta, tarjeta2, línea, texto, suave, tenue, acento, activo, hover, subrayado, esquema claro/oscuro</td><td>0 o 1 por Empresa</td></tr>
