@@ -70,10 +70,10 @@ Guardado: en el link de claude.ai, base de datos del artifact (capability `db`, 
 id de empresa), compartida para todos. Abierto desde la carpeta (file://), localStorage de ese navegador.
 
 ## Ficha del equipo (recuadro sobre el índice)
-Editable desde la página (botón "Editar datos"): Referente, Líder, Equipo y Asesores (uno por línea). Se guarda
-igual que la asignación: colección `ficha` del db (un doc por id de empresa) en claude.ai, localStorage en la carpeta.
+Cada campo (Referente, Líder, Equipo, Asesores) es una lista de personas: "+ Agregar" abre un cuadro para escribir
+el nombre (Enter/Agregar, Escape cancela) y × quita. Se guarda solo, igual que la asignación: colección `ficha` del db (un doc por id de empresa) en claude.ai, localStorage en la carpeta.
 Lo guardado pisa los valores de ESTRUCTURA, que quedan como valores iniciales.
-Unidad · Referente operativo · Líder operativo · Equipo · Asesores (en ese orden; asesores es una lista). Sin cotizaciones del dólar (se quitaron a pedido).
+Unidad · Referente operativo · Líder operativo · Equipo · Asesores (en ese orden; todos son listas, valores sueltos de ESTRUCTURA se leen como lista de uno). Sin cotizaciones del dólar (se quitaron a pedido).
 Mercurius: Unidad Cesiones · Equipo Mercurius · Referente Jean Franco Umpierrez · Líder Mónica Rocha.
 
 ## Empresas cargadas

@@ -131,7 +131,7 @@ footer{color:var(--suave);font-size:.85rem;text-align:center;padding-bottom:30px
       <div class="mq-titulo">[ Logo de la empresa ]</div>
       <div class="mq-grid">
         <div class="mq-panel">
-          <div class="mq-ficha">Unidad<br>Referente operativo<br>Líder operativo<br>Equipo<br>Asesores<br><u>Editar datos</u></div>
+          <div class="mq-ficha">Unidad<br>Referente operativo<br>Líder operativo<br>Equipo<br>Asesores<br><u>+ Agregar</u></div>
           <div class="mq-ind"><div><b>1 · Manual</b></div><div class="on">1.1 Quién es ITAU</div><div>1.2 Productos</div><div>…</div><div><b>2 · Pautas de carga</b></div><div>…</div></div>
         </div>
         <div class="mq-panel mq-sec"><small>1.1 · MANUAL</small><h5>Quién es ITAU</h5><div>Bajada de la sección</div><div class="pend">Contenido de la sección / formulario</div><div class="bt"><span>← Anterior</span><span>Siguiente →</span></div></div>
@@ -157,8 +157,8 @@ footer{color:var(--suave);font-size:.85rem;text-align:center;padding-bottom:30px
 <section id="formularios">
   <h2><span class="n">6</span>Formularios (datos que se cargan desde la página)</h2>
   <h3>6.1 Ficha del equipo</h3>
-  <p class="lead">Recuadro sobre el índice. Botón <b>Editar datos</b> → los campos pasan a ser editables → <b>Guardar</b> / <b>Cancelar</b>.</p>
-  <div class="tabla"><table><tr><th>Campo</th><th>Tipo</th></tr><tr><td>Unidad</td><td>Fija: la unidad a la que pertenece la empresa (no editable).</td></tr><tr><td>Referente operativo</td><td>Texto libre, una persona.</td></tr><tr><td>Líder operativo</td><td>Texto libre, una persona.</td></tr><tr><td>Equipo</td><td>Texto libre.</td></tr><tr><td>Asesores</td><td>Lista: uno o varios nombres (uno por línea al editar).</td></tr></table></div>
+  <p class="lead">Recuadro sobre el índice. Cada campo es una lista de personas: <b>+ Agregar</b> abre un cuadro para escribir el nombre (Enter o "Agregar") y cada persona tiene una <b>×</b> para quitarla. Se guarda solo.</p>
+  <div class="tabla"><table><tr><th>Campo</th><th>Tipo</th></tr><tr><td>Unidad</td><td>Fija: la unidad a la que pertenece la empresa (no editable).</td></tr><tr><td>Referente operativo</td><td>Lista de personas (una o varias).</td></tr><tr><td>Líder operativo</td><td>Lista de personas (una o varias).</td></tr><tr><td>Equipo</td><td>Lista (uno o varios equipos).</td></tr><tr><td>Asesores</td><td>Lista de personas (una o varias).</td></tr></table></div>
   <p class="notas">Vacío se muestra como "A definir". Orden fijo: Unidad, Referente operativo, Líder operativo, Equipo, Asesores.</p>
   <h3>6.2 Montos (sección 2.1)</h3>
   <p class="lead">La sección muestra cuatro apartados con un cuadro de texto libre cada uno, propio de cada empresa. Se guarda automáticamente mientras se escribe (y al salir del cuadro).</p>
@@ -197,7 +197,7 @@ footer{color:var(--suave);font-size:.85rem;text-align:center;padding-bottom:30px
     <tr><td><b>Área</b></td><td>id, nombre, ícono, descripción, intro, próximamente (sí/no)</td><td>Tiene muchas Unidades</td></tr>
     <tr><td><b>Unidad</b></td><td>id, nombre (MAYÚSCULAS), título para la ficha</td><td>Pertenece a un Área · tiene muchas Empresas</td></tr>
     <tr><td><b>Empresa</b></td><td>id (sin espacios ni guiones), nombre, logo, tema de colores, bajada, enlace a manual completo (opcional)</td><td>Pertenece a una Unidad · tiene una Ficha, una Asignación y contenido por sección</td></tr>
-    <tr><td><b>Ficha del equipo</b></td><td>referente, líder, equipo, asesores (lista)</td><td>1 por Empresa</td></tr>
+    <tr><td><b>Ficha del equipo</b></td><td>referente, líder, equipo, asesores (cada uno es una lista de nombres)</td><td>1 por Empresa</td></tr>
     <tr><td><b>Montos</b></td><td>capital, minima, maxima, promocion (texto libre)</td><td>1 por Empresa</td></tr>
     <tr><td><b>Clasificación</b></td><td>segmento, subcartera, etiquetas (texto libre)</td><td>1 por Empresa</td></tr>
     <tr><td><b>Notas</b></td><td>operacion, deuda (texto libre)</td><td>1 por Empresa</td></tr>

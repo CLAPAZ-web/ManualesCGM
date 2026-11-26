@@ -51,16 +51,22 @@ h1{font-family:var(--display);font-weight:700;font-size:clamp(2rem,4.5vw,2.75rem
 .manual{display:grid;grid-template-columns:320px minmax(0,1fr);gap:24px;align-items:start}
 .lateral{background:var(--tarjeta);border:1px solid var(--linea);border-radius:16px;padding:18px;position:sticky;top:calc(16px + env(safe-area-inset-top,0px))}
 .ficha{display:grid;gap:12px;border:1px solid var(--linea);border-radius:12px;padding:16px;background:var(--tarjeta2);margin-bottom:20px}
+.ficha{grid-template-columns:minmax(0,1fr)}
+.ficha .dato{display:flex;flex-direction:column;min-width:0}
 .ficha .dato+.dato{border-top:1px solid var(--linea);padding-top:12px}
 .ficha .lbl{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--suave)}
 .ficha .val{font-size:1.05rem;font-weight:600;margin-top:2px}
 .ficha .val.vacio{color:var(--tenue);font-weight:400;font-style:italic}
-.ficha label.dato{display:flex;flex-direction:column;gap:6px}
-.ficha input,.ficha textarea{font:inherit;font-size:.98rem;color:var(--texto);background:var(--tarjeta);border:1px solid var(--linea);border-radius:8px;padding:8px 10px;width:100%;resize:vertical}
-.ficha input:focus-visible,.ficha textarea:focus-visible{outline:2px solid var(--oro);outline-offset:1px}
-.ficha .editar-ficha{justify-self:start;font-size:.85rem;padding:6px 12px}
-.ficha .acciones-ficha{display:flex;gap:8px}
-.ficha .guardar{border-color:var(--oro);color:var(--oro);font-weight:600}
+.ficha .personas{list-style:none;margin:2px 0 0;padding:0;display:grid;gap:2px}
+.ficha .personas li{display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:1.02rem;font-weight:600}
+.ficha .personas button{flex:none;background:none;border:0;color:var(--tenue);font:inherit;font-size:1.05rem;line-height:1;width:26px;height:26px;border-radius:50%;cursor:pointer}
+.ficha .personas button:hover{background:var(--hover,rgba(255,255,255,.08));color:var(--texto)}
+.ficha .mas{justify-self:start;align-self:flex-start;background:none;border:0;padding:4px 0 0;color:var(--oro);font:inherit;font-size:.85rem;font-weight:600;cursor:pointer}
+.ficha .mas:hover{text-decoration:underline}
+.ficha .agregar-persona{display:flex;gap:6px;margin-top:6px}
+.ficha .agregar-persona input{flex:1;min-width:0;font:inherit;font-size:.95rem;color:var(--texto);background:var(--tarjeta);border:1px solid var(--linea);border-radius:8px;padding:7px 10px}
+.ficha .agregar-persona .btn{padding:6px 10px;font-size:.85rem}
+.ficha button:focus-visible,.ficha input:focus-visible{outline:2px solid var(--oro);outline-offset:1px}
 .ficha .estado-ficha{margin:0;font-size:.8rem;color:var(--tenue)}
 .ficha .estado-ficha:empty{display:none}
 .indice .tit{font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--oro);margin:0 2px 12px}
@@ -309,55 +315,64 @@ function vistaUnidad(a,u){
       <span class="pie">${PLANTILLA.reduce((t,g)=>t+g.items.length,0)} secciones</span></a>`).join("")+`</div>`:"");
 }
 
-/* Ficha del equipo: editable desde la página; lo guardado pisa los datos de ESTRUCTURA */
+/* Ficha del equipo: cada campo es una lista de personas que se agregan y quitan desde la página
+   (se guarda solo); lo guardado pisa los datos de ESTRUCTURA */
 const CAMPOS_FICHA=[["referente","Referente operativo"],["lider","Líder operativo"],["equipo","Equipo"],["asesores","Asesores"]];
-let editandoFicha=false;
+let editandoFicha=false; // clave del campo con el cuadro "Agregar" abierto
 function datosFicha(e){
   const g=leerFicha(e.id), d={};
-  CAMPOS_FICHA.forEach(([k])=>{ d[k]=k in g?g[k]:e[k]; });
-  d.asesores=[].concat(d.asesores||[]).filter(Boolean);
+  CAMPOS_FICHA.forEach(([k])=>{ d[k]=[].concat((k in g?g[k]:e[k])||[]).map(v=>String(v).trim()).filter(Boolean); });
   return d;
 }
 function ficha(u,e){
   const d=datosFicha(e);
-  const fila=(l,v)=>`<div class="dato"><div class="lbl">${l}</div><div class="val${v?"":" vacio"}">${v||"A definir"}</div></div>`;
-  if(!editandoFicha) return `<div class="ficha" id="ficha">${fila("Unidad",esc(u.titulo||u.nombre))}`+
-    CAMPOS_FICHA.map(([k,l])=>fila(l,k==="asesores"?d.asesores.map(esc).join("<br>"):esc(d[k]))).join("")+
-    `<button class="btn editar-ficha" id="editarFicha">Editar datos</button><p class="estado-ficha" id="fichaEstado"></p></div>`;
-  return `<div class="ficha editando" id="ficha">${fila("Unidad",esc(u.titulo||u.nombre))}`+
-    CAMPOS_FICHA.map(([k,l])=>`<label class="dato"><span class="lbl">${l}</span>`+(k==="asesores"
-      ?`<textarea data-f="${k}" rows="4" placeholder="Un asesor por línea">${esc(d.asesores.join("\n"))}</textarea>`
-      :`<input data-f="${k}" maxlength="80" value="${esc(d[k]||"")}" placeholder="A definir">`)+`</label>`).join("")+
-    `<div class="acciones-ficha"><button class="btn guardar" id="guardarFicha">Guardar</button><button class="btn" id="cancelarFicha">Cancelar</button></div>
-    <p class="estado-ficha" id="fichaEstado">${dbAsig?"":"Abierto desde la carpeta: se guarda solo en este navegador."}</p></div>`;
+  return `<div class="ficha" id="ficha"><div class="dato"><div class="lbl">Unidad</div><div class="val">${esc(u.titulo||u.nombre)}</div></div>`+
+    CAMPOS_FICHA.map(([k,l])=>`<div class="dato"><div class="lbl">${l}</div>`+
+      (d[k].length?`<ul class="personas">${d[k].map((n,i)=>`<li><span>${esc(n)}</span><button data-quitar-f="${k}" data-i="${i}" aria-label="Quitar ${esc(n)}">×</button></li>`).join("")}</ul>`
+        :`<div class="val vacio">A definir</div>`)+
+      (editandoFicha===k
+        ?`<div class="agregar-persona"><input data-nuevo="${k}" maxlength="80" placeholder="Nombre y apellido" aria-label="Agregar en ${l}"><button class="btn" data-ok="${k}">Agregar</button></div>`
+        :`<button class="mas" data-agregar="${k}">+ Agregar</button>`)+`</div>`).join("")+
+    `<p class="estado-ficha" id="fichaEstado"></p></div>`;
 }
 function leerFicha(id){
   if(dbAsig) return FICHA[id]||{};
   try{ return JSON.parse(localStorage.getItem("ficha_"+id))||{}; }catch(_){ return {}; }
 }
-function montarFicha(u,e){
+function guardarFicha(e,d){
   const est=t=>{ const x=$("fichaEstado"); if(x) x.textContent=t; };
-  if(!editandoFicha){ $("editarFicha").onclick=()=>{ editandoFicha=true; repintarFicha(); const i=document.querySelector("#ficha [data-f]"); if(i) i.focus(); }; return; }
-  $("cancelarFicha").onclick=()=>{ editandoFicha=false; repintarFicha(); };
-  $("guardarFicha").onclick=()=>{
-    const d={};
-    document.querySelectorAll("#ficha [data-f]").forEach(x=>{ const k=x.dataset.f;
-      d[k]=k==="asesores"?x.value.split("\n").map(v=>v.trim()).filter(Boolean):x.value.trim(); });
-    if(!dbAsig){
-      try{ localStorage.setItem("ficha_"+e.id,JSON.stringify(d)); editandoFicha=false; repintarFicha(); est("Guardado en este navegador."); }
-      catch(_){ est("No se pudo guardar en este navegador."); }
-      return;
-    }
-    est("Guardando…"); $("guardarFicha").disabled=true;
-    colaFicha=colaFicha.then(()=>dbAsig.doc("ficha/"+e.id).set(d))
-      .then(()=>{ FICHA[e.id]=d; editandoFicha=false; repintarFicha(); est("Guardado."); })
-      .catch(err=>{ const b=$("guardarFicha"); if(b) b.disabled=false;
-        est(err&&err.code==="not_granted"?"No tenés permiso para editar estos datos.":"No se pudo guardar. Probá de nuevo."); });
-  };
+  if(!dbAsig){
+    try{ localStorage.setItem("ficha_"+e.id,JSON.stringify(d)); repintarFicha(); est("Guardado solo en este navegador (abierto desde la carpeta)."); }
+    catch(_){ est("No se pudo guardar en este navegador."); }
+    return;
+  }
+  FICHA[e.id]=d; repintarFicha(); est("Guardando…");
+  colaFicha=colaFicha.then(()=>dbAsig.doc("ficha/"+e.id).set(d))
+    .then(()=>est("Guardado."))
+    .catch(err=>est(err&&err.code==="not_granted"?"No tenés permiso para editar estos datos.":"No se pudo guardar. Probá de nuevo."));
+}
+function montarFicha(u,e){
+  const box=$("ficha"); if(!box) return;
+  box.querySelectorAll("[data-agregar]").forEach(b=>b.onclick=()=>{
+    editandoFicha=b.dataset.agregar; repintarFicha(); const i=box.ownerDocument.querySelector("#ficha [data-nuevo]"); if(i) i.focus(); });
+  const inp=box.querySelector("[data-nuevo]");
+  if(inp){
+    const agregar=()=>{ const k=inp.dataset.nuevo, v=inp.value.trim(); editandoFicha=false;
+      if(!v){ repintarFicha(); return; }
+      const d=datosFicha(e); if(!d[k].some(n=>n.toLowerCase()===v.toLowerCase())) d[k].push(v);
+      guardarFicha(e,d); };
+    box.querySelector("[data-ok]").onclick=agregar;
+    inp.onkeydown=ev=>{ if(ev.key==="Enter"){ ev.preventDefault(); agregar(); }
+      else if(ev.key==="Escape"){ editandoFicha=false; repintarFicha(); } };
+  }
+  box.querySelectorAll("[data-quitar-f]").forEach(b=>b.onclick=()=>{
+    const d=datosFicha(e); d[b.dataset.quitarF].splice(+b.dataset.i,1); guardarFicha(e,d); });
 }
 function repintarFicha(){
   const box=$("ficha"); if(!box||!empresaActual||!unidadActual) return;
+  const est=$("fichaEstado").textContent;
   box.outerHTML=ficha(unidadActual,empresaActual); montarFicha(unidadActual,empresaActual);
+  if(est) $("fichaEstado").textContent=est;
 }
 
 function vistaEmpresa(a,u,e){

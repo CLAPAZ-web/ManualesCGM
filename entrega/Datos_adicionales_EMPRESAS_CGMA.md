@@ -151,7 +151,7 @@ Base CGM&A (sin tema propio): fondo `#0b1f45`, tarjeta `#10285a`, tarjeta2 `#163
 - Unidad sin empresas: "Todavía no hay empresas cargadas en esta unidad."
 - Página de empresa: "Unidad [UNIDAD] · Manual de gestión de la empresa, armado sobre la plantilla común."
 - Sección vacía: "Aquí va el contenido de la sección adaptado a [Empresa]." · Grupo próximamente: "Esta sección se va a completar próximamente."
-- Ficha vacía: "A definir". Botones: "Editar datos", "Guardar", "Cancelar".
+- Ficha vacía: "A definir". En cada campo: "+ Agregar" (cuadro "Nombre y apellido" + botón "Agregar") y × para quitar.
 - Reportería vacía: "Sin reportes cargados." · Campo: "Agregar un reporte (ej. Reporte de gestión)".
 - Estados de guardado: "Guardando…", "Guardado.", "No tenés permiso para editar estos datos.", "No se pudo guardar. Probá de nuevo."
 - Pie: "EMPRESAS · CGM&A · Gestión de cobranza y contact center · Maqueta de estructura general: los contenidos se irán completando."
@@ -159,6 +159,6 @@ Base CGM&A (sin tema propio): fondo `#0b1f45`, tarjeta `#10285a`, tarjeta2 `#163
 ## 9. Notas técnicas del prototipo
 
 - Navegación por la dirección de la página: `#inicio`, `#cobranza`, `#cobranza-tardia`, `#cobranza-tardia-itau` (niveles separados por guion; por eso los id no llevan guiones).
-- Ficha, Montos, Segmento/subcartera/etiquetas, Notas y Pautas de asignación se guardan en una base de datos compartida, un registro por empresa: colección `ficha` (referente, lider, equipo, asesores[]), `montos` (capital, minima, maxima, promocion), `clasificacion` (segmento, subcartera, etiquetas), `notas` (operacion, deuda) y `asignacion` (tipo, frecuencia, recibeAct, frecuenciaAct, reporteria[]).
+- Ficha, Montos, Segmento/subcartera/etiquetas, Notas y Pautas de asignación se guardan en una base de datos compartida, un registro por empresa: colección `ficha` (referente[], lider[], equipo[], asesores[]), `montos` (capital, minima, maxima, promocion), `clasificacion` (segmento, subcartera, etiquetas), `notas` (operacion, deuda) y `asignacion` (tipo, frecuencia, recibeAct, frecuenciaAct, reporteria[]).
 - Los valores de la ficha definidos en el prototipo funcionan como valores iniciales; lo cargado desde la página los reemplaza.
 - Las empresas sin `tema` usan los colores de CGM&A; las que tienen logo lo muestran como título de su página.
