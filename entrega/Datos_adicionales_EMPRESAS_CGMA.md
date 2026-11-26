@@ -90,9 +90,9 @@ Desde la página no se cargó todavía ninguna ficha adicional.
 - **2.2 Segmento, subcartera y etiquetas** **[formulario]**: Cómo se clasifica la operación: segmento, subcartera y etiquetas a aplicar.
 - **2.3 Notas** **[formulario]**: Qué información se registra en las notas de la operación y de la deuda.
 
-### 3 · Pautas de asignación
+### 3 · Pautas de asignación y reportería
 
-- **3.1 Pautas de asignación** **[formulario]**: Cómo envía la empresa la asignación de cuentas y qué reportes se le devuelven.
+- **3.1 Pautas de asignación y reportería** **[formulario]**: Cómo envía la empresa la asignación de cuentas y qué reportes se le devuelven.
 
 ### 4 · Pautas administrativas (Próximamente)
 

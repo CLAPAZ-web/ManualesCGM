@@ -52,7 +52,7 @@ En las tarjetas el logo va sobre un recuadro blanco (para que se vean logos oscu
     1.5 Medios de pago · 1.6 Promos vigentes · 1.7 Tablas
 2 · Pautas de carga: 2.1 Montos (formulario: Capital, Mínima, Máxima, Monto promoción) · 2.2 Segmento, subcartera y etiquetas
     (formulario: Segmento, Subcartera, Etiquetas) · 2.3 Notas (formulario: Notas de la operación, Notas de la deuda)
-3 · Pautas de asignación: 3.1 es un formulario (ver abajo)
+3 · Pautas de asignación y reportería: 3.1 (mismo nombre) es un formulario (ver abajo)
 4 · Pautas administrativas (próximamente a completar)
 5 · Comercial: 5.1 Comisiones · 5.2 Contrato
 
