@@ -214,12 +214,10 @@ const PLANTILLA = [
   ]},
   { n:"2", grupo:"Pautas de carga", items:[
     ["2.1","Montos","Criterios para cargar el capital, la mínima y la máxima de cada operación.","montos"],
-    ["2.2","Segmento","Qué segmento se asigna a la operación y cómo se carga."],
-    ["2.3","Subcartera","A qué subcartera corresponde la operación y cómo identificarla."],
-    ["2.4","Etiquetas","Etiquetas que se usan y cuándo corresponde aplicar cada una."],
-    ["2.5","Notas de la operación","Qué información se registra en las notas de la operación."],
-    ["2.6","Notas de la deuda","Qué información se registra en las notas de la deuda."],
-    ["2.7","Monto promoción","Cómo se calcula y se carga el monto de la promoción."],
+    ["2.2","Segmento, subcartera y etiquetas","Cómo se clasifica la operación: segmento, subcartera y etiquetas a aplicar.","clasificacion"],
+    ["2.3","Notas de la operación","Qué información se registra en las notas de la operación."],
+    ["2.4","Notas de la deuda","Qué información se registra en las notas de la deuda."],
+    ["2.5","Monto promoción","Cómo se calcula y se carga el monto de la promoción."],
   ]},
   { n:"3", grupo:"Pautas de asignación", items:[
     ["3.1","Pautas de asignación","Cómo envía la empresa la asignación de cuentas y qué reportes se le devuelven.","asignacion"],
@@ -383,7 +381,7 @@ function vistaEmpresa(a,u,e){
       <div class="eyebrow">${it[0]} · ${esc(PLANTILLA.find(g=>g.items.includes(it)).grupo)}</div>
       <h2>${esc(t(it[1]))}</h2>
       <p class="bajada">${esc(t(it[2]))}</p>
-      ${it[3]==="asignacion"?formAsig(e):it[3]==="montos"?formMontos(e):texto?`<div class="cuerpo">${texto}</div>`:`<div class="pendiente">${PLANTILLA.find(g=>g.items.includes(it)).proximamente?"Esta sección se va a completar próximamente.":"Aquí va el contenido de la sección adaptado a "+esc(e.nombre)+"."}</div>`}
+      ${it[3]==="asignacion"?formAsig(e):FORMS_TEXTO[it[3]]?formTextos(it[3],e):texto?`<div class="cuerpo">${texto}</div>`:`<div class="pendiente">${PLANTILLA.find(g=>g.items.includes(it)).proximamente?"Esta sección se va a completar próximamente.":"Aquí va el contenido de la sección adaptado a "+esc(e.nombre)+"."}</div>`}
       <div class="nav-sec">
         <button class="btn" data-sec="${idx>0?items[idx-1][0]:""}" ${idx>0?"":"disabled"}>← ${idx>0?esc(t(items[idx-1][1])):"Anterior"}</button>
         <button class="btn" data-sec="${idx<items.length-1?items[idx+1][0]:""}" ${idx<items.length-1?"":"disabled"}>${idx<items.length-1?esc(t(items[idx+1][1])):"Siguiente"} →</button>
@@ -444,65 +442,75 @@ function repintarAsig(foco,conservar=true){
   try{
     const db=window.claude&&typeof window.claude.use==="function"?await window.claude.use("db"):null;
     if(!db) return;
-    dbAsig=db; repintarAsig(false,false); repintarMontos(false); if(!editandoFicha) repintarFicha();
+    dbAsig=db; repintarAsig(false,false); repintarTextos(false); if(!editandoFicha) repintarFicha();
     db.collection("ficha").onSnapshot(snap=>{
       snap.docChanges().forEach(c=>{ if(c.type==="removed") delete FICHA[c.doc.id]; else FICHA[c.doc.id]=c.doc.data()||{}; });
       if(!editandoFicha) repintarFicha();
     },()=>{});
-    db.collection("montos").onSnapshot(snap=>{
-      snap.docChanges().forEach(c=>{ if(c.type==="removed") delete MONTOS[c.doc.id]; else MONTOS[c.doc.id]=c.doc.data()||{}; });
-      const box=$("montos"); if(box&&!box.contains(document.activeElement)&&!montosPendiente) repintarMontos();
-    },()=>{});
+    Object.keys(FORMS_TEXTO).forEach(tipo=>db.collection(tipo).onSnapshot(snap=>{
+      snap.docChanges().forEach(c=>{ if(c.type==="removed") delete TEXTOS[tipo][c.doc.id]; else TEXTOS[tipo][c.doc.id]=c.doc.data()||{}; });
+      const box=$("textos"); if(box&&box.dataset.tipo===tipo&&!box.contains(document.activeElement)&&!textosPendiente) repintarTextos();
+    },()=>{}));
     db.collection("asignacion").onSnapshot(snap=>{
       snap.docChanges().forEach(c=>{ if(c.type==="removed") delete ASIG[c.doc.id]; else ASIG[c.doc.id]=c.doc.data()||{}; });
       const box=$("asig"); if(box&&!box.contains(document.activeElement)) repintarAsig();
     },()=>{});
   }catch(_){}
 })();
-/* Montos (2.1): texto propio de cada empresa para capital, mínima y máxima; se guarda al escribir */
-const MONTOS={}; let colaMontos=Promise.resolve(), montosPendiente=null, montosTimer=null;
-const CAMPOS_MONTOS=[["capital","Capital","Cómo se carga el capital adeudado en el sistema."],
-  ["minima","Mínima","Criterio para cargar el monto mínimo."],["maxima","Máxima","Criterio para cargar el monto máximo."]];
-function leerMontos(id){
-  if(dbAsig) return MONTOS[id]||{};
-  try{ return JSON.parse(localStorage.getItem("montos_"+id))||{}; }catch(_){ return {}; }
+/* Formularios de texto libre por empresa (2.1 Montos, 2.2 Segmento, subcartera y etiquetas).
+   Cada uno: colección del db = su clave; se guarda solo al escribir */
+const FORMS_TEXTO={
+  montos:[["capital","Capital","Cómo se carga el capital adeudado en el sistema."],
+          ["minima","Mínima","Criterio para cargar el monto mínimo."],
+          ["maxima","Máxima","Criterio para cargar el monto máximo."]],
+  clasificacion:[["segmento","Segmento","Qué segmento se asigna a la operación y cómo se carga."],
+          ["subcartera","Subcartera","A qué subcartera corresponde la operación y cómo identificarla."],
+          ["etiquetas","Etiquetas","Etiquetas que se usan y cuándo corresponde aplicar cada una."]],
+};
+const TEXTOS={}; for(const t in FORMS_TEXTO) TEXTOS[t]={};
+let colaTextos=Promise.resolve(), textosPendiente=null, textosTimer=null;
+function leerTextos(tipo,id){
+  if(dbAsig) return TEXTOS[tipo][id]||{};
+  try{ return JSON.parse(localStorage.getItem(tipo+"_"+id))||{}; }catch(_){ return {}; }
 }
-function formMontos(e){
-  const d=leerMontos(e.id);
-  return `<div class="montos" id="montos">`+CAMPOS_MONTOS.map(([k,l,ayuda])=>`<label class="monto"><span class="monto-tit">${l}</span>
+function formTextos(tipo,e){
+  const d=leerTextos(tipo,e.id);
+  return `<div class="montos" id="textos" data-tipo="${tipo}">`+FORMS_TEXTO[tipo].map(([k,l,ayuda])=>`<label class="monto"><span class="monto-tit">${l}</span>
     <span class="monto-ayuda">${ayuda}</span><textarea data-m="${k}" rows="5" placeholder="Escribí acá el criterio de ${l.toLowerCase()} para ${esc(e.nombre)}…">${esc(d[k]||"")}</textarea></label>`).join("")+
-    `<p class="estado" id="montosEstado">${dbAsig?"":"Abierto desde la carpeta: lo que escribas se guarda solo en este navegador."}</p></div>`;
+    `<p class="estado" id="textosEstado">${dbAsig?"":"Abierto desde la carpeta: lo que escribas se guarda solo en este navegador."}</p></div>`;
 }
-function guardarMontos(){
-  if(!montosPendiente) return;
-  const {id,datos}=montosPendiente; montosPendiente=null; clearTimeout(montosTimer); montosTimer=null;
-  const est=t=>{ const x=$("montosEstado"); if(x) x.textContent=t; };
+function guardarTextos(){
+  if(!textosPendiente) return;
+  const {tipo,id,datos}=textosPendiente; textosPendiente=null; clearTimeout(textosTimer); textosTimer=null;
+  const est=t=>{ const x=$("textosEstado"); if(x) x.textContent=t; };
   if(!dbAsig){
-    try{ localStorage.setItem("montos_"+id,JSON.stringify(datos)); est("Guardado en este navegador."); }catch(_){ est("No se pudo guardar en este navegador."); }
+    try{ localStorage.setItem(tipo+"_"+id,JSON.stringify(datos)); est("Guardado en este navegador."); }catch(_){ est("No se pudo guardar en este navegador."); }
     return;
   }
-  MONTOS[id]=datos; est("Guardando…");
-  colaMontos=colaMontos.then(()=>dbAsig.doc("montos/"+id).set(datos))
-    .then(()=>{ if(!montosPendiente) est("Guardado."); })
+  TEXTOS[tipo][id]=datos; est("Guardando…");
+  colaTextos=colaTextos.then(()=>dbAsig.doc(tipo+"/"+id).set(datos))
+    .then(()=>{ if(!textosPendiente) est("Guardado."); })
     .catch(err=>est(err&&err.code==="not_granted"?"No tenés permiso para editar estos datos.":"No se pudo guardar. Probá de nuevo."));
 }
-function montarMontos(e){
-  document.querySelectorAll("#montos [data-m]").forEach(t=>{
+function montarTextos(e){
+  const box=$("textos"); if(!box) return;
+  const tipo=box.dataset.tipo;
+  box.querySelectorAll("[data-m]").forEach(t=>{
     t.oninput=()=>{
-      const datos={...leerMontos(e.id)};
-      document.querySelectorAll("#montos [data-m]").forEach(x=>{ datos[x.dataset.m]=x.value; });
-      montosPendiente={id:e.id,datos};
-      const x=$("montosEstado"); if(x) x.textContent="Sin guardar…";
-      clearTimeout(montosTimer); montosTimer=setTimeout(guardarMontos,900);
+      const datos={...leerTextos(tipo,e.id)};
+      box.querySelectorAll("[data-m]").forEach(x=>{ datos[x.dataset.m]=x.value; });
+      textosPendiente={tipo,id:e.id,datos};
+      const x=$("textosEstado"); if(x) x.textContent="Sin guardar…";
+      clearTimeout(textosTimer); textosTimer=setTimeout(guardarTextos,900);
     };
-    t.onblur=guardarMontos;
+    t.onblur=guardarTextos;
   });
 }
-function repintarMontos(conservar=true){
-  const box=$("montos"); if(!box||!empresaActual) return;
-  const est=$("montosEstado").textContent;
-  box.outerHTML=formMontos(empresaActual); montarMontos(empresaActual);
-  if(conservar&&est) $("montosEstado").textContent=est;
+function repintarTextos(conservar=true){
+  const box=$("textos"); if(!box||!empresaActual) return;
+  const est=$("textosEstado").textContent;
+  box.outerHTML=formTextos(box.dataset.tipo,empresaActual); montarTextos(empresaActual);
+  if(conservar&&est) $("textosEstado").textContent=est;
 }
 let temaActual=null;
 function aplicarTema(t){
@@ -513,7 +521,7 @@ function aplicarTema(t){
   if(t) for(const k in t){ if(k==="esquema") r.colorScheme=t[k]; else r.setProperty("--"+k,t[k]); }
 }
 function render(){
-  guardarMontos();
+  guardarTextos();
   const [ai,ui,ei]=(location.hash.slice(1)||"inicio").split("-");
   const a=ESTRUCTURA.find(x=>x.id===ai&&!x.proximamente);
   const u=a&&a.unidades.find(x=>x.id===ui);
@@ -522,7 +530,7 @@ function render(){
   if(e!==empresaActual) editandoFicha=false;
   $("app").innerHTML= e?vistaEmpresa(a,u,e): u?vistaUnidad(a,u): a?vistaArea(a): vistaInicio();
   const ab=$("abrir"); if(ab) ab.onclick=()=>abrirManual(e);
-  empresaActual=e||null; unidadActual=u||null; if($("asig")) montarAsig(e); if($("montos")) montarMontos(e); if($("ficha")) montarFicha(u,e);
+  empresaActual=e||null; unidadActual=u||null; if($("asig")) montarAsig(e); if($("textos")) montarTextos(e); if($("ficha")) montarFicha(u,e);
   document.querySelectorAll("[data-sec]").forEach(b=>b.onclick=()=>{ if(!b.dataset.sec)return; seccionActual=b.dataset.sec; render();
     if(innerWidth<=900) document.querySelector(".seccion").scrollIntoView({behavior:"smooth",block:"start"}); });
 }

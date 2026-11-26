@@ -50,16 +50,17 @@ En las tarjetas el logo va sobre un recuadro blanco (para que se vean logos oscu
 ## Índice acordado (glosario base, tomado de Mercurius)
 1 · Manual: 1.1 Quién es {EMPRESA} · 1.2 Productos · 1.3 Montos a cobrar · 1.4 Pautas de gestión ·
     1.5 Medios de pago · 1.6 Promos vigentes · 1.7 Tablas
-2 · Pautas de carga: 2.1 Montos (formulario: Capital, Mínima, Máxima) · 2.2 Segmento · 2.3 Subcartera ·
-    2.4 Etiquetas · 2.5 Notas de la operación · 2.6 Notas de la deuda · 2.7 Monto promoción
+2 · Pautas de carga: 2.1 Montos (formulario: Capital, Mínima, Máxima) · 2.2 Segmento, subcartera y etiquetas
+    (formulario: Segmento, Subcartera, Etiquetas) · 2.3 Notas de la operación · 2.4 Notas de la deuda · 2.5 Monto promoción
 3 · Pautas de asignación: 3.1 es un formulario (ver abajo)
 4 · Pautas administrativas (próximamente a completar)
 5 · Comercial: 5.1 Comisiones · 5.2 Contrato
 
-## Montos (formulario en 2.1)
-Tres cuadros de texto libre por empresa (Capital, Mínima, Máxima; `CAMPOS_MONTOS`). Se guarda solo al escribir
-(0,9 s de pausa) y al salir del cuadro o cambiar de sección. Colección `montos` del db (doc por id de empresa:
-capital, minima, maxima); localStorage `montos_<id>` en la carpeta.
+## Formularios de texto (2.1 Montos y 2.2 Segmento, subcartera y etiquetas)
+Definidos en `FORMS_TEXTO` (clave = tipo = colección del db): `montos` (capital, minima, maxima) y `clasificacion`
+(segmento, subcartera, etiquetas). En PLANTILLA el 4º elemento del ítem indica el tipo. Tres cuadros de texto libre
+por empresa; se guarda solo al escribir (0,9 s de pausa), al salir del cuadro o al cambiar de sección.
+Doc por id de empresa en la colección del tipo; localStorage `<tipo>_<id>` en la carpeta.
 
 ## Pautas de asignación (formulario en 3.1)
 Desplegables definidos en `CAMPOS_ASIG` (parte editable 5): Tipo de asignación (Stock/Actualización/Stock y actualización/Sólo ingreso/Stock e ingreso),
